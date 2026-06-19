@@ -8,7 +8,11 @@
       "Add generateStaticParams() for statically generated dynamic routes",
       "Check next.config.js for incorrect rewrites or redirects"
     ],
-    "tags": ["routing", "deployment", "dynamic-routes", "vercel"]
+    "tags": ["routing", "deployment", "dynamic-routes", "vercel"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes"],
+    "version": "next@13+"
   },
   {
     "type": "bug_fix",
@@ -19,7 +23,11 @@
       "Verify API route is not using Node.js-only APIs with edge runtime",
       "Remove 'export const runtime = \"edge\"' if using Node.js specific modules"
     ],
-    "tags": ["api-routes", "environment-variables", "edge-runtime", "vercel"]
+    "tags": ["api-routes", "environment-variables", "edge-runtime", "vercel"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/environment-variables"],
+    "version": "next@13+"
   },
   {
     "type": "bug_fix",
@@ -31,7 +39,11 @@
       "Ensure consistent date formatting using UTC or a library like date-fns",
       "Check for extensions or injected scripts that modify DOM"
     ],
-    "tags": ["hydration", "ssr", "client-components", "react"]
+    "tags": ["hydration", "ssr", "client-components", "react"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/messages/react-hydration-error"],
+    "version": "next@13+"
   },
   {
     "type": "bug_fix",
@@ -42,7 +54,11 @@
       "Example: images: { remotePatterns: [{ protocol: 'https', hostname: 'example.com' }] }",
       "For external CDN, configure a custom loader or use unoptimized prop"
     ],
-    "tags": ["next-image", "images", "configuration", "vercel"]
+    "tags": ["next-image", "images", "configuration", "vercel"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/api-reference/components/image"],
+    "version": "next@13+"
   },
   {
     "type": "bug_fix",
@@ -53,8 +69,13 @@
       "Exclude API routes and static files: matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']",
       "Add condition to skip redirect if already on target path"
     ],
-    "tags": ["middleware", "routing", "authentication", "redirect"]
+    "tags": ["middleware", "routing", "authentication", "redirect"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/middleware"],
+    "version": "next@12+"
   },
+
   {
     "type": "error",
     "symptoms": ["FUNCTION_INVOCATION_TIMEOUT", "task timed out after 10 seconds"],
@@ -65,7 +86,11 @@
       "Move long-running tasks to background jobs using Vercel Cron or a queue",
       "Upgrade to Pro plan for up to 300s timeout"
     ],
-    "tags": ["timeout", "serverless", "performance", "vercel"]
+    "tags": ["timeout", "serverless", "performance", "vercel"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/functions/runtimes#max-duration"],
+    "version": "next@13+"
   },
   {
     "type": "error",
@@ -77,7 +102,11 @@
       "Reduce bundle size - edge functions have a 1MB limit after compression",
       "Use edge-compatible alternatives: crypto.subtle instead of crypto"
     ],
-    "tags": ["edge-runtime", "serverless", "vercel", "compatibility"]
+    "tags": ["edge-runtime", "serverless", "vercel", "compatibility"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://vercel.com/docs/functions/edge-functions/edge-runtime"],
+    "version": "next@13+"
   },
   {
     "type": "error",
@@ -89,7 +118,11 @@
       "Add 'server-only' package to prevent accidental client imports: import 'server-only'",
       "Check that server utilities aren't re-exported from barrel files used by client components"
     ],
-    "tags": ["module-resolution", "server-components", "client-components", "bundling"]
+    "tags": ["module-resolution", "server-components", "client-components", "bundling"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns"],
+    "version": "next@13+"
   },
   {
     "type": "error",
@@ -101,8 +134,13 @@
       "Ensure external service allows connections from Vercel IP ranges",
       "Add proper error handling and retry logic for transient network failures"
     ],
-    "tags": ["networking", "api-routes", "environment-variables", "serverless"]
+    "tags": ["networking", "api-routes", "environment-variables", "serverless"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/functions/serverless-functions"],
+    "version": "next@13+"
   },
+
   {
     "type": "log_pattern",
     "symptoms": ["[next-auth][error] CLIENT_FETCH_ERROR", "NEXTAUTH_URL not set"],
@@ -113,7 +151,11 @@
       "For Vercel, NEXTAUTH_URL can be omitted if using VERCEL_URL (auto-set by Vercel)",
       "Ensure callback URLs in OAuth provider match the production domain"
     ],
-    "tags": ["next-auth", "authentication", "environment-variables", "vercel"]
+    "tags": ["next-auth", "authentication", "environment-variables", "vercel"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://next-auth.js.org/configuration/options"],
+    "version": "next-auth@4+"
   },
   {
     "type": "log_pattern",
@@ -124,7 +166,11 @@
       "Use stable unique identifiers, not array indices, for dynamic lists",
       "If no unique ID exists, generate one at data creation time, not render time"
     ],
-    "tags": ["react", "performance", "rendering", "warnings"]
+    "tags": ["react", "performance", "rendering", "warnings"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key"],
+    "version": "react@18+"
   },
   {
     "type": "log_pattern",
@@ -135,7 +181,11 @@
       "Use useCallback for memoized event handlers that trigger state updates",
       "If derived state is needed, compute it during render without setState"
     ],
-    "tags": ["react", "state-management", "hooks", "rendering"]
+    "tags": ["react", "state-management", "hooks", "rendering"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://react.dev/reference/react/useState"],
+    "version": "react@18+"
   },
   {
     "type": "config_issue",
@@ -143,11 +193,15 @@
     "root_cause": "Node.js version mismatch or missing build configuration",
     "fix": [
       "Set Node.js version in package.json engines field or Vercel project settings",
-      "Add .nvmrc file with target version (e.g., 18.17.0)",
+      "Add .nvmrc file with target version (e.g., 20.x)",
       "Check that all dependencies are in dependencies, not just devDependencies if needed at runtime",
       "Set installCommand or buildCommand in vercel.json if using monorepo"
     ],
-    "tags": ["build", "deployment", "node-version", "vercel", "configuration"]
+    "tags": ["build", "deployment", "node-version", "vercel", "configuration"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/build-step"],
+    "version": "next@13+"
   },
   {
     "type": "config_issue",
@@ -159,7 +213,11 @@
       "Handle OPTIONS preflight: if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders })",
       "Use vercel.json headers config for static assets"
     ],
-    "tags": ["cors", "api-routes", "headers", "security"]
+    "tags": ["cors", "api-routes", "headers", "security"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/guides/how-to-enable-cors"],
+    "version": "next@13+"
   },
   {
     "type": "config_issue",
@@ -171,7 +229,11 @@
       "Redeploy after adding env vars - they are baked in at build time for client",
       "Use Vercel CLI: vercel env pull .env.local to sync environment variables"
     ],
-    "tags": ["environment-variables", "configuration", "security", "vercel"]
+    "tags": ["environment-variables", "configuration", "security", "vercel"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/environment-variables"],
+    "version": "next@13+"
   },
   {
     "type": "config_issue",
@@ -183,8 +245,13 @@
       "For App Router: export const revalidate = 60 in page/layout",
       "Check Vercel dashboard Data Cache section for cache hit/miss metrics"
     ],
-    "tags": ["caching", "isr", "revalidation", "data-fetching", "vercel"]
+    "tags": ["caching", "isr", "revalidation", "data-fetching", "vercel"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/caching"],
+    "version": "next@13+"
   },
+
   {
     "type": "doc",
     "symptoms": ["how to setup database connection", "database connection pooling on serverless"],
@@ -195,7 +262,11 @@
       "Cache PrismaClient instance: globalThis.prisma = globalThis.prisma || new PrismaClient()",
       "Consider Vercel KV (Redis) or Vercel Postgres for Vercel-native options"
     ],
-    "tags": ["database", "connection-pooling", "prisma", "serverless", "vercel"]
+    "tags": ["database", "connection-pooling", "prisma", "serverless", "vercel"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/databases-connections"],
+    "version": "prisma@5+"
   },
   {
     "type": "doc",
@@ -207,7 +278,11 @@
       "For App Router: export const maxDuration and use streaming",
       "Use Vercel Blob Storage for simple file upload needs"
     ],
-    "tags": ["file-upload", "blob-storage", "s3", "serverless-limits", "vercel"]
+    "tags": ["file-upload", "blob-storage", "s3", "serverless-limits", "vercel"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://vercel.com/docs/storage/vercel-blob"],
+    "version": "next@13+"
   },
   {
     "type": "doc",
@@ -220,7 +295,11 @@
       "Use middleware.ts for route-level protection before page loads",
       "Store session tokens in httpOnly cookies, not localStorage"
     ],
-    "tags": ["authentication", "next-auth", "middleware", "security", "session"]
+    "tags": ["authentication", "next-auth", "middleware", "security", "session"],
+    "severity": "high",
+    "frequency": "very-common",
+    "related_docs": ["https://next-auth.js.org/getting-started/introduction"],
+    "version": "next-auth@4+"
   },
   {
     "type": "code_pattern",
@@ -233,7 +312,11 @@
       "Use parallel data fetching with Promise.all() for independent requests",
       "Set appropriate revalidation: fetch(url, { next: { revalidate: 3600, tags: ['posts'] } })"
     ],
-    "tags": ["data-fetching", "server-components", "caching", "react", "app-router"]
+    "tags": ["data-fetching", "server-components", "caching", "react", "app-router"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/data-fetching"],
+    "version": "next@13+"
   },
   {
     "type": "code_pattern",
@@ -246,7 +329,11 @@
       "Revalidate data after mutation: revalidatePath('/path') or revalidateTag('tag')",
       "Return typed responses: use zod for validation, return { error } or { success } objects"
     ],
-    "tags": ["server-actions", "forms", "mutations", "app-router", "validation"]
+    "tags": ["server-actions", "forms", "mutations", "app-router", "validation"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations"],
+    "version": "next@14+"
   },
   {
     "type": "code_pattern",
@@ -259,8 +346,13 @@
       "Use try/catch in Server Actions and return error state to client",
       "Integrate error reporting: Sentry, LogRocket, or Vercel Web Analytics"
     ],
-    "tags": ["error-handling", "error-boundary", "monitoring", "app-router"]
+    "tags": ["error-handling", "error-boundary", "monitoring", "app-router"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/error-handling"],
+    "version": "next@13+"
   },
+
   {
     "type": "fix_snippet",
     "symptoms": ["implement rate limiting on API routes", "too many requests", "API abuse prevention"],
@@ -272,7 +364,11 @@
       "In handler: const { success } = await ratelimit.limit(identifier); if (!success) return Response.json({ error: 'Too many requests' }, { status: 429 })",
       "Use IP from headers: request.headers.get('x-forwarded-for') ?? '127.0.0.1'"
     ],
-    "tags": ["rate-limiting", "security", "redis", "upstash", "api-routes"]
+    "tags": ["rate-limiting", "security", "redis", "upstash", "api-routes"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ratelimit-ts/overview"],
+    "version": "@upstash/ratelimit@1+"
   },
   {
     "type": "fix_snippet",
@@ -285,7 +381,11 @@
       "Set CRON_SECRET env var in Vercel dashboard",
       "Pro plan required for cron intervals less than once per day"
     ],
-    "tags": ["cron", "background-jobs", "scheduling", "vercel", "api-routes"]
+    "tags": ["cron", "background-jobs", "scheduling", "vercel", "api-routes"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/cron-jobs"],
+    "version": "next@13+"
   },
   {
     "type": "fix_snippet",
@@ -298,7 +398,11 @@
       "Secure endpoint with secret: if (req.headers.get('x-webhook-secret') !== process.env.REVALIDATION_SECRET) return Response.json({ message: 'Invalid secret' }, { status: 401 })",
       "Configure CMS webhook to hit /api/revalidate on content publish"
     ],
-    "tags": ["isr", "revalidation", "caching", "cms", "webhooks"]
+    "tags": ["isr", "revalidation", "caching", "cms", "webhooks"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/caching#on-demand-revalidation"],
+    "version": "next@13+"
   },
   {
     "type": "diagnostic_step",
@@ -313,7 +417,11 @@
       "Verify images use next/image with proper sizes and priority props",
       "Check if using 'use client' unnecessarily on large component trees"
     ],
-    "tags": ["performance", "core-web-vitals", "lighthouse", "optimization"]
+    "tags": ["performance", "core-web-vitals", "lighthouse", "optimization"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/optimizing"],
+    "version": "next@13+"
   },
   {
     "type": "diagnostic_step",
@@ -328,7 +436,11 @@
       "Check for missing dependencies: move from devDependencies if needed at build",
       "Clear .next folder and node_modules, then rebuild: rm -rf .next node_modules && npm install && npm run build"
     ],
-    "tags": ["build", "deployment", "debugging", "vercel", "ci-cd"]
+    "tags": ["build", "deployment", "debugging", "vercel", "ci-cd"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/deployments/troubleshoot-a-build"],
+    "version": "next@13+"
   },
   {
     "type": "diagnostic_step",
@@ -342,8 +454,13 @@
       "Check for event listener leaks: always remove listeners in useEffect cleanup",
       "Use streaming for large responses instead of buffering entire payload"
     ],
-    "tags": ["memory", "serverless", "debugging", "performance", "vercel"]
+    "tags": ["memory", "serverless", "debugging", "performance", "vercel"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://vercel.com/docs/functions/serverless-functions/runtimes"],
+    "version": "next@13+"
   },
+
   {
     "type": "root_cause",
     "symptoms": ["flash of unstyled content", "FOUC", "CSS not loading initially", "layout shift on load"],
@@ -355,7 +472,11 @@
       "Add font-display: swap for custom fonts",
       "Preload critical CSS with <link rel='preload'>"
     ],
-    "tags": ["css", "fonts", "fouc", "styling", "ssr"]
+    "tags": ["css", "fonts", "fouc", "styling", "ssr", "tailwind"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/optimizing/fonts"],
+    "version": "next@13+"
   },
   {
     "type": "root_cause",
@@ -369,7 +490,11 @@
       "Check that cookie path is '/' for site-wide access",
       "Verify cookie is not being blocked by browser privacy settings"
     ],
-    "tags": ["cookies", "authentication", "session", "security", "deployment"]
+    "tags": ["cookies", "authentication", "session", "security", "deployment"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies"],
+    "version": "next@13+"
   },
   {
     "type": "root_cause",
@@ -382,7 +507,11 @@
       "Split useEffect into multiple focused effects with minimal dependencies",
       "Use primitive values in dependency arrays when possible"
     ],
-    "tags": ["react", "hooks", "useEffect", "performance", "rendering"]
+    "tags": ["react", "hooks", "useEffect", "performance", "rendering"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://react.dev/reference/react/useEffect"],
+    "version": "react@18+"
   },
   {
     "type": "performance_case",
@@ -396,7 +525,11 @@
       "Use next/script with strategy='lazyOnload' for third-party scripts",
       "Enable gzip/brotli compression (Vercel handles this automatically)"
     ],
-    "tags": ["bundle-size", "code-splitting", "performance", "optimization", "tree-shaking"]
+    "tags": ["bundle-size", "code-splitting", "performance", "optimization", "tree-shaking"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/optimizing/bundle-analyzer"],
+    "version": "next@13+"
   },
   {
     "type": "performance_case",
@@ -411,7 +544,11 @@
       "Place database in same region as Vercel serverless functions (check in Vercel dashboard)",
       "Use Vercel Edge Config for frequently read, rarely written configuration data"
     ],
-    "tags": ["database", "performance", "queries", "caching", "serverless"]
+    "tags": ["database", "performance", "queries", "caching", "serverless"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/queries/query-optimization-performance"],
+    "version": "prisma@5+"
   },
   {
     "type": "performance_case",
@@ -426,7 +563,11 @@
       "Use placeholder='blur' with blurDataURL for perceived performance",
       "Configure remote patterns for external image sources in next.config.js"
     ],
-    "tags": ["images", "performance", "core-web-vitals", "lcp", "next-image"]
+    "tags": ["images", "performance", "core-web-vitals", "lcp", "next-image"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/optimizing/images"],
+    "version": "next@13+"
   },
   {
     "type": "performance_case",
@@ -440,6 +581,1938 @@
       "Choose function region closest to your users in vercel.json: { \"regions\": [\"iad1\"] }",
       "Split large API routes into smaller, focused route handlers"
     ],
-    "tags": ["cold-start", "serverless", "latency", "edge-runtime", "performance", "vercel"]
+    "tags": ["cold-start", "serverless", "latency", "edge-runtime", "performance", "vercel"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/functions/configuring-functions/region"],
+    "version": "next@13+"
+  },
+
+  {
+    "type": "config_issue",
+    "symptoms": ["TypeScript strict mode errors everywhere", "type errors after enabling strict", "implicit any errors"],
+    "root_cause": "tsconfig.json strict mode enabled without proper type annotations throughout codebase",
+    "fix": [
+      "Enable strict incrementally: start with 'noImplicitAny': true, then add stricter options",
+      "Use ts-expect-error for temporary suppressions during migration",
+      "Generate proper types from Prisma schema: npx prisma generate",
+      "Use zod for runtime validation with TypeScript inference: z.infer<typeof schema>"
+    ],
+    "tags": ["typescript", "tsconfig", "strict-mode", "local-dev"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.typescriptlang.org/tsconfig#strict"],
+    "version": "typescript@5+"
+  },
+  {
+    "type": "config_issue",
+    "symptoms": ["path aliases not working", "Cannot find module @/components", "tsconfig paths not resolving"],
+    "root_cause": "Path aliases configured in tsconfig.json but not matching Next.js resolution",
+    "fix": [
+      "Ensure tsconfig.json has: { \"compilerOptions\": { \"baseUrl\": \".\", \"paths\": { \"@/*\": [\"./src/*\"] } } }",
+      "Next.js automatically reads tsconfig paths - no extra webpack config needed",
+      "Verify baseUrl matches your project structure",
+      "Restart TypeScript server after tsconfig changes: Cmd+Shift+P > Restart TS Server"
+    ],
+    "tags": ["typescript", "path-aliases", "tsconfig", "local-dev", "imports"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases"],
+    "version": "next@13+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["TypeScript errors not showing in VS Code", "type checking passes but runtime fails", "types out of sync"],
+    "root_cause": "TypeScript version mismatch between VS Code and project, or stale generated types",
+    "fix": [
+      "Use workspace TypeScript version: VS Code > Cmd+Shift+P > Select TypeScript Version > Use Workspace Version",
+      "Regenerate Prisma types: npx prisma generate",
+      "Restart TS server after installing new @types packages",
+      "Clear .next folder: rm -rf .next && npm run dev",
+      "Ensure next-env.d.ts is not gitignored"
+    ],
+    "tags": ["typescript", "vscode", "local-dev", "type-checking", "dx"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/typescript"],
+    "version": "typescript@5+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["how to type API route handlers", "TypeScript types for Next.js route handlers", "type safe API routes"],
+    "root_cause": "Need proper TypeScript typing for App Router route handlers",
+    "fix": [
+      "Import types: import { NextRequest, NextResponse } from 'next/server'",
+      "Type route handler: export async function GET(request: NextRequest, { params }: { params: { id: string } }) {}",
+      "Use generics for response: NextResponse.json<ResponseType>(data)",
+      "Create shared type definitions in lib/types.ts for request/response shapes",
+      "Use zod for runtime request body validation with TypeScript inference"
+    ],
+    "tags": ["typescript", "api-routes", "type-safety", "app-router"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/route-handlers"],
+    "version": "next@13+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["how to type server components", "TypeScript async component", "typed props for server components"],
+    "root_cause": "Need to properly type async Server Components with params and searchParams",
+    "fix": [
+      "Type page props: export default async function Page({ params, searchParams }: { params: { slug: string }; searchParams: { q?: string } }) {}",
+      "For Next.js 15+: params and searchParams are Promises - await them",
+      "Use satisfies for layout metadata: export const metadata = { title: 'Page' } satisfies Metadata",
+      "Define reusable types: type PageProps = { params: Promise<{ id: string }> }"
+    ],
+    "tags": ["typescript", "server-components", "app-router", "type-safety"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/api-reference/file-conventions/page"],
+    "version": "next@13+"
+  },
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Next.js TypeScript project from scratch", "initialize Next.js with TypeScript"],
+    "root_cause": "Need a properly configured Next.js TypeScript development environment",
+    "fix": [
+      "Create project: npx create-next-app@latest --typescript --tailwind --eslint --app --src-dir",
+      "Key tsconfig options: strict: true, forceConsistentCasingInFileNames: true, noUncheckedIndexedAccess: true",
+      "Install dev dependencies: npm i -D @types/node prettier eslint-config-prettier",
+      "Add scripts: \"typecheck\": \"tsc --noEmit\", \"lint\": \"next lint\"",
+      "Configure .env.local for local development environment variables"
+    ],
+    "tags": ["typescript", "project-setup", "local-dev", "configuration"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://nextjs.org/docs/getting-started/installation"],
+    "version": "next@14+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["how to use SQLite locally with Turso in production", "local SQLite to Turso migration", "libsql setup"],
+    "root_cause": "Need SQLite for fast local development with Turso (libSQL) as production database on Vercel",
+    "fix": [
+      "Install: npm install @libsql/client",
+      "Local config: createClient({ url: 'file:local.db' })",
+      "Production config: createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN! })",
+      "Use conditional: const db = process.env.NODE_ENV === 'development' ? localClient : tursoClient",
+      "Add local.db to .gitignore"
+    ],
+    "tags": ["sqlite", "turso", "libsql", "local-dev", "database"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://docs.turso.tech/sdk/ts/quickstart"],
+    "version": "@libsql/client@0.5+"
+  },
+  {
+    "type": "config_issue",
+    "symptoms": ["Turso connection fails on Vercel", "libsql auth token invalid", "TURSO_DATABASE_URL not working"],
+    "root_cause": "Turso environment variables not set correctly or using wrong URL format for Vercel",
+    "fix": [
+      "Use libsql:// protocol for remote Turso: TURSO_DATABASE_URL=libsql://your-db-name-org.turso.io",
+      "Generate auth token: turso db tokens create your-db-name",
+      "Set both TURSO_DATABASE_URL and TURSO_AUTH_TOKEN in Vercel environment variables",
+      "For embedded replicas on Vercel, use the HTTP URL: https://your-db-name-org.turso.io",
+      "Verify token hasn't expired: turso db tokens create your-db-name --expiration none"
+    ],
+    "tags": ["turso", "sqlite", "environment-variables", "vercel", "configuration"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://docs.turso.tech/sdk/ts/guides/vercel"],
+    "version": "@libsql/client@0.5+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Drizzle ORM with SQLite and Turso", "type-safe SQLite queries", "Drizzle schema for Turso"],
+    "root_cause": "Need type-safe ORM layer for SQLite/Turso with good developer experience",
+    "fix": [
+      "Install: npm install drizzle-orm @libsql/client && npm install -D drizzle-kit",
+      "Define schema: export const users = sqliteTable('users', { id: integer('id').primaryKey(), name: text('name').notNull() })",
+      "Create client: import { drizzle } from 'drizzle-orm/libsql'; const db = drizzle(client)",
+      "drizzle.config.ts: export default { schema: './src/db/schema.ts', driver: 'turso', dbCredentials: { url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN } }",
+      "Migrate: npx drizzle-kit push:sqlite"
+    ],
+    "tags": ["drizzle", "turso", "sqlite", "orm", "type-safety", "schema"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://orm.drizzle.team/docs/get-started-sqlite#turso"],
+    "version": "drizzle-orm@0.29+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["SQLite database locked", "SQLITE_BUSY error", "concurrent write failures locally"],
+    "root_cause": "SQLite does not support concurrent writes; multiple dev server requests causing lock contention",
+    "fix": [
+      "Enable WAL mode: PRAGMA journal_mode=WAL",
+      "Set busy timeout: PRAGMA busy_timeout=5000",
+      "Use a single database connection instance (singleton pattern)",
+      "For heavy concurrency needs, switch to Turso which handles this at the edge",
+      "Avoid long-running transactions in development"
+    ],
+    "tags": ["sqlite", "concurrency", "local-dev", "database-locking"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://www.sqlite.org/wal.html"],
+    "version": "better-sqlite3@9+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["setup Turso embedded replicas", "sync local replica with Turso", "offline-first with Turso"],
+    "root_cause": "Need low-latency reads with Turso embedded replicas for edge/serverless",
+    "fix": [
+      "Install: npm install @libsql/client",
+      "Create synced client: createClient({ url: 'file:replica.db', syncUrl: process.env.TURSO_DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN, syncInterval: 60 })",
+      "Writes go to remote, reads from local replica",
+      "Call client.sync() to manually trigger sync",
+      "Note: Embedded replicas not supported on Vercel serverless (no persistent filesystem) - use for non-serverless deployments"
+    ],
+    "tags": ["turso", "sqlite", "embedded-replicas", "edge", "performance"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://docs.turso.tech/sdk/ts/guides/embedded-replicas"],
+    "version": "@libsql/client@0.5+"
+  },
+  {
+    "type": "diagnostic_step",
+    "symptoms": ["Turso migration failed", "schema drift between local and production", "SQLite schema out of sync"],
+    "root_cause": "Database migrations not properly applied across environments",
+    "fix": [
+      "Use Drizzle Kit for migrations: npx drizzle-kit generate:sqlite && npx drizzle-kit push:sqlite",
+      "Or Turso CLI: turso db shell your-db < migrations/001.sql",
+      "Compare schemas: npx drizzle-kit introspect:sqlite to see current remote state",
+      "Keep migration files in version control under /drizzle or /migrations",
+      "Test migrations locally on file:test.db before applying to production"
+    ],
+    "tags": ["turso", "sqlite", "migrations", "schema", "drizzle"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://orm.drizzle.team/docs/migrations"],
+    "version": "drizzle-kit@0.20+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Prisma with Neon PostgreSQL", "Neon serverless driver with Prisma", "Prisma Neon adapter"],
+    "root_cause": "Need to configure Prisma ORM with Neon's serverless PostgreSQL for Vercel deployment",
+    "fix": [
+      "Install: npm install prisma @prisma/client @prisma/adapter-neon @neondatabase/serverless",
+      "Set DATABASE_URL in .env: postgresql://user:pass@ep-xxx.region.neon.tech/dbname?sslmode=require",
+      "In schema.prisma: generator client { provider = 'prisma-client-js' previewFeatures = ['driverAdapters'] }",
+      "Initialize client with Neon adapter: import { Pool, neonConfig } from '@neondatabase/serverless'; const pool = new Pool({ connectionString: process.env.DATABASE_URL }); const adapter = new PrismaNeon(pool); const prisma = new PrismaClient({ adapter })",
+      "Generate client: npx prisma generate && npx prisma db push"
+    ],
+    "tags": ["prisma", "neon", "postgresql", "serverless", "database"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/overview/databases/neon", "https://neon.tech/docs/guides/prisma"],
+    "version": "prisma@5.4+"
+  },
+  {
+    "type": "config_issue",
+    "symptoms": ["Prisma connection timeout on Vercel", "too many database connections", "connection pool exhausted Neon"],
+    "root_cause": "Serverless functions create too many connections without proper pooling configuration",
+    "fix": [
+      "Use Neon's connection pooler URL (port 5432 for session mode, or use pooled connection string)",
+      "Add ?pgbouncer=true&connect_timeout=15 to connection string for pooled mode",
+      "Set connection_limit in Prisma schema: datasource db { url = env(\"DATABASE_URL\") directUrl = env(\"DIRECT_URL\") }",
+      "Use DIRECT_URL for migrations, DATABASE_URL (pooled) for runtime",
+      "Singleton pattern: globalThis.prisma = globalThis.prisma || new PrismaClient()"
+    ],
+    "tags": ["prisma", "neon", "connection-pooling", "vercel", "serverless"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://neon.tech/docs/connect/connection-pooling"],
+    "version": "prisma@5+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Prisma Client not generated", "Cannot find module '.prisma/client'", "PrismaClient is not a constructor"],
+    "root_cause": "Prisma Client needs to be regenerated after schema changes or in CI/build environment",
+    "fix": [
+      "Run: npx prisma generate (locally and in build)",
+      "Add to build script: \"build\": \"prisma generate && next build\"",
+      "Or add postinstall script: \"postinstall\": \"prisma generate\"",
+      "For monorepos, ensure prisma generate runs in the correct package directory",
+      "Clear node_modules/.prisma and regenerate if types are stale"
+    ],
+    "tags": ["prisma", "build", "code-generation", "deployment"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/generating-prisma-client"],
+    "version": "prisma@5+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Prisma type-safe queries", "TypeScript with Prisma best practices", "Prisma query patterns"],
+    "root_cause": "Need efficient and type-safe database query patterns with Prisma",
+    "fix": [
+      "Use select for partial queries: prisma.user.findMany({ select: { id: true, email: true } })",
+      "Use include for relations: prisma.post.findMany({ include: { author: true } })",
+      "Transaction: await prisma.$transaction([query1, query2]) or prisma.$transaction(async (tx) => {})",
+      "Pagination: prisma.post.findMany({ skip: page * limit, take: limit, orderBy: { createdAt: 'desc' } })",
+      "Use Prisma.validator for reusable query args: const userSelect = Prisma.validator<Prisma.UserSelect>()({ id: true, name: true })"
+    ],
+    "tags": ["prisma", "typescript", "queries", "type-safety", "patterns"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/queries"],
+    "version": "prisma@5+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Neon cold start slow", "first query to Neon takes long", "database latency spike after idle"],
+    "root_cause": "Neon auto-suspends compute after inactivity, causing cold start on first query",
+    "fix": [
+      "Use Neon's serverless driver (@neondatabase/serverless) for WebSocket connections - faster cold starts",
+      "Enable auto-scaling with minimum compute size to reduce suspend frequency",
+      "Use connection pooling to keep connections warm",
+      "Place Neon database in same region as Vercel functions (e.g., us-east-1 / iad1)",
+      "For critical paths, add a warmup query in middleware or cron",
+      "Consider Neon Pro plan for always-on compute endpoint"
+    ],
+    "tags": ["neon", "postgresql", "cold-start", "performance", "latency"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://neon.tech/docs/introduction/auto-suspend"],
+    "version": "@neondatabase/serverless@0.9+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Prisma migrations on Neon", "database migration workflow Neon", "schema changes in production"],
+    "root_cause": "Need safe migration workflow for Prisma with Neon branching",
+    "fix": [
+      "Development: npx prisma migrate dev --name description (uses DIRECT_URL)",
+      "Production: npx prisma migrate deploy (in CI/CD pipeline)",
+      "Use Neon branching for safe testing: neon branches create --name feature-branch",
+      "Set DIRECT_URL to non-pooled Neon connection for migrations",
+      "Add to CI: npx prisma migrate deploy before deployment",
+      "Rollback: npx prisma migrate resolve --rolled-back migration_name"
+    ],
+    "tags": ["prisma", "neon", "migrations", "ci-cd", "database"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-migrate", "https://neon.tech/docs/guides/prisma-migrations"],
+    "version": "prisma@5+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Supabase realtime in Next.js", "real-time updates with Supabase", "live data subscription"],
+    "root_cause": "Need real-time data synchronization between server and clients using Supabase Realtime",
+    "fix": [
+      "Install: npm install @supabase/supabase-js @supabase/ssr",
+      "Create browser client: createBrowserClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)",
+      "Subscribe to changes: supabase.channel('room').on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, (payload) => { handleChange(payload) }).subscribe()",
+      "Enable realtime on table: ALTER PUBLICATION supabase_realtime ADD TABLE messages",
+      "Unsubscribe on cleanup: supabase.removeChannel(channel)"
+    ],
+    "tags": ["supabase", "realtime", "websocket", "live-updates", "postgresql"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/realtime"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Supabase client in Next.js App Router", "server vs client Supabase client", "SSR Supabase setup"],
+    "root_cause": "Need separate Supabase clients for server components, client components, and middleware",
+    "fix": [
+      "Create utils/supabase/server.ts: import { createServerClient } from '@supabase/ssr'; use cookies() from next/headers",
+      "Create utils/supabase/client.ts: import { createBrowserClient } from '@supabase/ssr'",
+      "Create utils/supabase/middleware.ts: for auth session refresh in middleware",
+      "Server component: const supabase = createServerClient(url, key, { cookies }); const { data } = await supabase.from('posts').select()",
+      "Client component: const supabase = createBrowserClient(url, key); use for realtime subscriptions"
+    ],
+    "tags": ["supabase", "app-router", "ssr", "client-components", "server-components"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://supabase.com/docs/guides/auth/server-side/nextjs"],
+    "version": "@supabase/ssr@0.1+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Supabase realtime not receiving events", "subscription not working", "channel not connected"],
+    "root_cause": "Realtime not enabled on table, RLS blocking subscription, or client not properly subscribed",
+    "fix": [
+      "Enable realtime: Go to Supabase Dashboard > Database > Replication > Enable for target table",
+      "Or SQL: ALTER PUBLICATION supabase_realtime ADD TABLE your_table",
+      "Check RLS policies allow SELECT for the subscribing user role",
+      "Ensure .subscribe() is called and status is 'SUBSCRIBED'",
+      "Check channel status: channel.on('system', { event: '*' }, (status) => console.log(status))",
+      "Verify NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are correct"
+    ],
+    "tags": ["supabase", "realtime", "debugging", "rls", "subscription"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/realtime/postgres-changes"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement real-time chat with Supabase", "live messaging Next.js", "real-time notifications"],
+    "root_cause": "Need to implement real-time messaging/notifications with proper subscription management",
+    "fix": [
+      "Create channel: const channel = supabase.channel('chat-room')",
+      "Listen for inserts: channel.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'room_id=eq.123' }, (payload) => setMessages(prev => [...prev, payload.new]))",
+      "Subscribe: channel.subscribe()",
+      "Send message via server action or API: await supabase.from('messages').insert({ content, room_id, user_id })",
+      "Cleanup in useEffect return: () => { supabase.removeChannel(channel) }",
+      "Use Broadcast for ephemeral events (typing indicators): channel.send({ type: 'broadcast', event: 'typing', payload: { user_id } })"
+    ],
+    "tags": ["supabase", "realtime", "chat", "websocket", "broadcast"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/realtime/broadcast"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Supabase RLS blocking queries", "permission denied for table", "empty results with RLS enabled"],
+    "root_cause": "Row Level Security policies not configured to allow access for the current user/role",
+    "fix": [
+      "Check existing policies: SELECT * FROM pg_policies WHERE tablename = 'your_table'",
+      "Create SELECT policy: CREATE POLICY 'read_own' ON messages FOR SELECT USING (auth.uid() = user_id)",
+      "Create INSERT policy: CREATE POLICY 'insert_own' ON messages FOR INSERT WITH CHECK (auth.uid() = user_id)",
+      "For public read: CREATE POLICY 'public_read' ON posts FOR SELECT USING (true)",
+      "Service role key bypasses RLS - use only on server side, never expose to client",
+      "Test policies in Supabase Dashboard SQL editor with SET ROLE authenticated"
+    ],
+    "tags": ["supabase", "rls", "security", "postgresql", "authorization"],
+    "severity": "high",
+    "frequency": "very-common",
+    "related_docs": ["https://supabase.com/docs/guides/auth/row-level-security"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Supabase realtime connection limit", "too many WebSocket connections", "realtime scaling issues"],
+    "root_cause": "Each client creates a WebSocket connection; concurrent users can exceed plan limits",
+    "fix": [
+      "Consolidate subscriptions: use one channel with multiple event listeners instead of multiple channels",
+      "Unsubscribe from channels when components unmount or pages change",
+      "Use Supabase Realtime filters to reduce payload: filter: 'room_id=eq.specific-room'",
+      "For high traffic, use Broadcast instead of Postgres Changes (lower latency, no DB trigger)",
+      "Monitor connection count in Supabase Dashboard > Realtime > Connections",
+      "Consider Supabase Pro plan for higher concurrent connection limits"
+    ],
+    "tags": ["supabase", "realtime", "scaling", "websocket", "performance"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://supabase.com/docs/guides/realtime/quotas"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Supabase presence for online users", "show who is online", "user presence tracking"],
+    "root_cause": "Need to track and display real-time user presence/online status",
+    "fix": [
+      "Create presence channel: const channel = supabase.channel('online-users', { config: { presence: { key: userId } } })",
+      "Track presence: channel.on('presence', { event: 'sync' }, () => { const state = channel.presenceState(); setOnlineUsers(Object.keys(state)) })",
+      "Subscribe and track: channel.subscribe(async (status) => { if (status === 'SUBSCRIBED') { await channel.track({ user_id: userId, online_at: new Date().toISOString() }) } })",
+      "Untrack on leave: channel.untrack()",
+      "Listen for join/leave: channel.on('presence', { event: 'join' }, ({ newPresences }) => {})"
+    ],
+    "tags": ["supabase", "realtime", "presence", "online-users", "websocket"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://supabase.com/docs/guides/realtime/presence"],
+    "version": "@supabase/supabase-js@2+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Upstash QStash in Next.js", "background jobs on Vercel", "async task processing serverless"],
+    "root_cause": "Need to process background tasks that exceed Vercel's function timeout using QStash message queue",
+    "fix": [
+      "Install: npm install @upstash/qstash",
+      "Create QStash client: import { Client } from '@upstash/qstash'; const qstash = new Client({ token: process.env.QSTASH_TOKEN! })",
+      "Publish message: await qstash.publishJSON({ url: 'https://your-app.vercel.app/api/process', body: { taskId: '123' } })",
+      "Create receiver endpoint: app/api/process/route.ts that handles the background task",
+      "Verify signature: import { Receiver } from '@upstash/qstash'; const receiver = new Receiver({ currentSigningKey, nextSigningKey })",
+      "Set QSTASH_TOKEN, QSTASH_CURRENT_SIGNING_KEY, QSTASH_NEXT_SIGNING_KEY in Vercel env vars"
+    ],
+    "tags": ["qstash", "upstash", "background-jobs", "queue", "serverless"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/qstash/quickstarts/vercel-nextjs"],
+    "version": "@upstash/qstash@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["QStash delayed messages", "schedule task for later", "deferred processing with QStash"],
+    "root_cause": "Need to schedule tasks for future execution on Vercel serverless",
+    "fix": [
+      "Delay delivery: await qstash.publishJSON({ url: endpoint, body: payload, delay: 300 }) // 5 minutes",
+      "Schedule with cron: await qstash.schedules.create({ destination: endpoint, cron: '0 9 * * 1' }) // every Monday 9am",
+      "Use Not-Before header: headers: { 'Upstash-Not-Before': Math.floor(Date.now() / 1000) + 3600 }",
+      "Cancel scheduled: await qstash.schedules.delete(scheduleId)",
+      "List active schedules: await qstash.schedules.list()"
+    ],
+    "tags": ["qstash", "upstash", "scheduling", "delayed-jobs", "cron"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/qstash/features/schedules"],
+    "version": "@upstash/qstash@2+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["QStash retry failed messages", "handle QStash delivery failure", "dead letter queue QStash"],
+    "root_cause": "Need to handle failed message delivery and implement retry logic with QStash",
+    "fix": [
+      "Set retry count: await qstash.publishJSON({ url: endpoint, body: payload, retries: 3 })",
+      "Configure callback for completion notification: callback: 'https://your-app.vercel.app/api/qstash-callback'",
+      "Set failure callback: failureCallback: 'https://your-app.vercel.app/api/qstash-dlq'",
+      "Your endpoint must return 2xx status to acknowledge - any other status triggers retry",
+      "View failed messages in Upstash Console > QStash > Dead Letter Queue",
+      "Replay DLQ messages: await qstash.dlq.deleteMany({ filter: { messageId } })"
+    ],
+    "tags": ["qstash", "upstash", "retry", "dead-letter-queue", "error-handling"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/qstash/features/retry"],
+    "version": "@upstash/qstash@2+"
+  },
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Inngest with Next.js", "event-driven functions Inngest", "durable functions on Vercel"],
+    "root_cause": "Need durable, event-driven background functions with built-in retry, scheduling, and observability",
+    "fix": [
+      "Install: npm install inngest",
+      "Create client: import { Inngest } from 'inngest'; export const inngest = new Inngest({ id: 'my-app' })",
+      "Define function: export const processOrder = inngest.createFunction({ id: 'process-order' }, { event: 'order/created' }, async ({ event, step }) => { await step.run('charge', () => chargePayment(event.data)) })",
+      "Create serve endpoint: app/api/inngest/route.ts: import { serve } from 'inngest/next'; export const { GET, POST, PUT } = serve({ client: inngest, functions: [processOrder] })",
+      "Send event: await inngest.send({ name: 'order/created', data: { orderId: '123' } })",
+      "Set INNGEST_EVENT_KEY and INNGEST_SIGNING_KEY in Vercel env vars"
+    ],
+    "tags": ["inngest", "event-driven", "background-jobs", "durable-functions", "serverless"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/getting-started/nextjs-quick-start"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Inngest step functions", "multi-step workflow Inngest", "durable workflow with retries"],
+    "root_cause": "Need to orchestrate multi-step workflows with automatic retries and state persistence",
+    "fix": [
+      "Define steps: async ({ step }) => { const user = await step.run('get-user', () => getUser(id)); const email = await step.run('send-email', () => sendEmail(user.email)); return { sent: true } }",
+      "Sleep between steps: await step.sleep('wait-1-hour', '1h')",
+      "Wait for event: const approval = await step.waitForEvent('wait-approval', { event: 'order/approved', timeout: '24h' })",
+      "Parallel steps: const [a, b] = await Promise.all([step.run('a', fnA), step.run('b', fnB)])",
+      "Each step retries independently on failure - no re-execution of completed steps"
+    ],
+    "tags": ["inngest", "workflow", "steps", "durable-functions", "orchestration"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/features/inngest-functions/steps-workflows"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Inngest functions not triggering", "events not received by Inngest", "Inngest dev server not connecting"],
+    "root_cause": "Inngest serve endpoint not properly configured or dev server not synced",
+    "fix": [
+      "Run Inngest dev server: npx inngest-cli@latest dev",
+      "Ensure serve route exports GET, POST, PUT: export const { GET, POST, PUT } = serve({ client, functions })",
+      "Dev server auto-discovers at http://localhost:3000/api/inngest - verify URL matches",
+      "Check that all functions are passed to serve() functions array",
+      "In production: sync via Vercel integration or manually at Inngest dashboard",
+      "Verify event name matches exactly between send() and createFunction trigger"
+    ],
+    "tags": ["inngest", "debugging", "local-dev", "configuration"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/local-development"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["fan-out pattern with Inngest", "process batch items with Inngest", "parallel processing events"],
+    "root_cause": "Need to process multiple items in parallel with individual retry handling",
+    "fix": [
+      "Fan-out: inngest.createFunction({ id: 'process-batch' }, { event: 'batch/ready' }, async ({ event, step }) => { const items = event.data.items; for (const item of items) { await step.run(`process-${item.id}`, () => processItem(item)) } })",
+      "Or send individual events: await step.run('fan-out', () => inngest.send(items.map(item => ({ name: 'item/process', data: item }))))",
+      "Use step.sendEvent for fan-out within a function",
+      "Each step.run has independent retries - one failure doesn't block others",
+      "Use concurrency controls: { concurrency: { limit: 10 } } in function config"
+    ],
+    "tags": ["inngest", "fan-out", "parallel", "batch-processing", "patterns"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://www.inngest.com/docs/guides/fan-out-jobs"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["combine QStash and Inngest", "when to use QStash vs Inngest", "event queue architecture"],
+    "root_cause": "Need to choose between QStash and Inngest for background processing on Vercel",
+    "fix": [
+      "Use QStash for: simple HTTP callbacks, delayed delivery, one-off scheduled messages, lightweight queue needs",
+      "Use Inngest for: multi-step workflows, event-driven architectures, complex retry logic, long-running processes with sleep/wait",
+      "QStash is lower-level (HTTP message delivery), Inngest is higher-level (durable function orchestration)",
+      "They can complement each other: QStash for simple triggers, Inngest for complex workflows",
+      "Both work on Vercel's serverless model without dedicated infrastructure"
+    ],
+    "tags": ["qstash", "inngest", "architecture", "event-queue", "comparison"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/qstash/overview", "https://www.inngest.com/docs"],
+    "version": "n/a"
+  },
+
+  {
+    "type": "config_issue",
+    "symptoms": ["Tailwind classes not applying", "styles not showing up", "Tailwind not working in Next.js"],
+    "root_cause": "Tailwind content paths not configured to scan the correct directories",
+    "fix": [
+      "Check tailwind.config.ts content paths include all component directories: content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}']",
+      "Ensure globals.css has @tailwind directives: @tailwind base; @tailwind components; @tailwind utilities;",
+      "Import globals.css in root layout.tsx: import './globals.css'",
+      "For Tailwind v4: use @import 'tailwindcss' in CSS file instead of directives",
+      "Restart dev server after tailwind.config changes"
+    ],
+    "tags": ["tailwind", "css", "configuration", "styling"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/guides/nextjs"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Tailwind dark mode not working", "dark class not applying styles", "theme toggle broken"],
+    "root_cause": "Dark mode strategy not configured or class not being applied to html/body element",
+    "fix": [
+      "Set darkMode in tailwind.config: darkMode: 'class' (for manual toggle) or 'media' (system preference)",
+      "Apply dark class to <html> element: <html className={theme === 'dark' ? 'dark' : ''}>",
+      "Use next-themes for easy toggle: npm install next-themes, wrap app in <ThemeProvider attribute='class'>",
+      "Use dark: prefix in classes: className='bg-white dark:bg-gray-900 text-black dark:text-white'",
+      "Suppress hydration warning on html element when using next-themes: suppressHydrationWarning"
+    ],
+    "tags": ["tailwind", "dark-mode", "theming", "next-themes"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/dark-mode"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Tailwind responsive design patterns", "mobile-first layout", "responsive breakpoints"],
+    "root_cause": "Need responsive layouts using Tailwind's mobile-first breakpoint system",
+    "fix": [
+      "Mobile-first: base styles are mobile, add breakpoints for larger: className='text-sm md:text-base lg:text-lg'",
+      "Responsive grid: className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'",
+      "Hide/show at breakpoints: className='hidden md:block' or 'block md:hidden'",
+      "Responsive padding: className='px-4 md:px-8 lg:px-16'",
+      "Custom breakpoints in config: theme: { screens: { xs: '475px', ...defaultTheme.screens } }"
+    ],
+    "tags": ["tailwind", "responsive", "breakpoints", "layout", "mobile-first"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://tailwindcss.com/docs/responsive-design"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Tailwind custom design system", "extend Tailwind theme", "custom colors and fonts in Tailwind"],
+    "root_cause": "Need to customize Tailwind with project-specific design tokens",
+    "fix": [
+      "Extend theme in tailwind.config.ts: theme: { extend: { colors: { brand: { 50: '#f0f9ff', 500: '#0ea5e9', 900: '#0c4a6e' } } } }",
+      "Custom fonts: theme: { extend: { fontFamily: { sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans] } } }",
+      "Use with next/font: const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })",
+      "CSS variables for dynamic theming: extend: { colors: { primary: 'hsl(var(--primary))' } }",
+      "Add custom animations: extend: { keyframes: { fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } } }, animation: { fadeIn: 'fadeIn 0.5s ease-in-out' } }"
+    ],
+    "tags": ["tailwind", "design-system", "theming", "customization", "fonts"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/theme"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["large CSS bundle with Tailwind", "unused Tailwind styles in production", "CSS file too big"],
+    "root_cause": "Tailwind content scanning including unnecessary files or not purging correctly",
+    "fix": [
+      "Tailwind v3+ purges by default in production - ensure content paths are correct and minimal",
+      "Don't use string concatenation for dynamic classes: use clsx or tailwind-merge instead",
+      "Bad: className={`text-${color}-500`} - Tailwind can't detect this at build time",
+      "Good: className={clsx({ 'text-red-500': color === 'red', 'text-blue-500': color === 'blue' })}",
+      "Use tailwind-merge to resolve conflicting classes: import { twMerge } from 'tailwind-merge'; twMerge('px-4 px-8') → 'px-8'",
+      "Install: npm install clsx tailwind-merge"
+    ],
+    "tags": ["tailwind", "performance", "css", "purging", "bundle-size"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/optimizing-for-production"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Tailwind component variants", "reusable styled components with Tailwind", "cva class variants"],
+    "root_cause": "Need reusable component styling with variant support using Tailwind",
+    "fix": [
+      "Use class-variance-authority (CVA): npm install class-variance-authority",
+      "Define variants: const button = cva('rounded font-medium', { variants: { intent: { primary: 'bg-blue-600 text-white', secondary: 'bg-gray-200 text-gray-800' }, size: { sm: 'px-2 py-1 text-sm', md: 'px-4 py-2', lg: 'px-6 py-3 text-lg' } }, defaultVariants: { intent: 'primary', size: 'md' } })",
+      "Use in component: <button className={button({ intent: 'primary', size: 'lg' })}>",
+      "Combine with tailwind-merge for override support: className={twMerge(button({ intent }), className)}",
+      "Type props with VariantProps: type ButtonProps = VariantProps<typeof button>"
+    ],
+    "tags": ["tailwind", "cva", "variants", "components", "design-system"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://cva.style/docs"],
+    "version": "class-variance-authority@0.7+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Tailwind classes conflicting", "specificity issues with Tailwind", "styles being overridden unexpectedly"],
+    "root_cause": "CSS specificity conflicts or class order issues when merging Tailwind classes",
+    "fix": [
+      "Use tailwind-merge to resolve conflicts: npm install tailwind-merge",
+      "Create utility: import { twMerge } from 'tailwind-merge'; import { clsx, type ClassValue } from 'clsx'; export function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)) }",
+      "Use cn() for conditional + merged classes: className={cn('base-styles', conditional && 'extra', props.className)}",
+      "This resolves: cn('px-4', 'px-8') → 'px-8' (last wins)",
+      "Add !important with Tailwind: className='!text-red-500' (use sparingly)"
+    ],
+    "tags": ["tailwind", "specificity", "tailwind-merge", "clsx", "utilities"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://github.com/dcastil/tailwind-merge"],
+    "version": "tailwind-merge@2+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["how to setup Redis with Upstash on Vercel", "serverless Redis setup", "Upstash Redis Next.js"],
+    "root_cause": "Need a serverless-compatible Redis instance for caching, rate limiting, and session storage on Vercel",
+    "fix": [
+      "Install: npm install @upstash/redis",
+      "Create client: import { Redis } from '@upstash/redis'; export const redis = Redis.fromEnv()",
+      "Set environment variables: UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel",
+      "For local dev: add same vars to .env.local (get from Upstash console)",
+      "Uses HTTP/REST protocol - no persistent connections needed (ideal for serverless)",
+      "Alternative: use Vercel KV (powered by Upstash) for tighter Vercel integration"
+    ],
+    "tags": ["redis", "upstash", "serverless", "vercel", "setup"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/overall/getstarted"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis deduplication cache", "prevent duplicate processing", "idempotent API requests", "dedup events"],
+    "root_cause": "Need to prevent duplicate event/request processing in distributed serverless environment",
+    "fix": [
+      "Generate dedup key from event content: const dedupKey = `dedup:${crypto.createHash('sha256').update(JSON.stringify(event)).digest('hex')}`",
+      "Check and set atomically: const exists = await redis.set(dedupKey, '1', { nx: true, ex: 3600 })",
+      "If exists is null, event was already processed - skip: if (!exists) return { deduplicated: true }",
+      "For webhook dedup: use webhook delivery ID as key: `dedup:webhook:${deliveryId}`",
+      "Set appropriate TTL based on dedup window: ex: 86400 for 24h dedup window",
+      "Clean pattern: async function isDuplicate(id: string, ttlSeconds = 3600): Promise<boolean> { const result = await redis.set(`dedup:${id}`, Date.now(), { nx: true, ex: ttlSeconds }); return result === null }"
+    ],
+    "tags": ["redis", "deduplication", "idempotency", "webhooks", "event-processing"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/set"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis rate limiting implementation", "sliding window rate limit", "token bucket rate limiter"],
+    "root_cause": "Need distributed rate limiting across serverless function instances",
+    "fix": [
+      "Use @upstash/ratelimit for production-ready implementation: npm install @upstash/ratelimit",
+      "Sliding window: const ratelimit = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, '10s') })",
+      "Token bucket: const ratelimit = new Ratelimit({ redis, limiter: Ratelimit.tokenBucket(10, '10s', 10) })",
+      "Fixed window: const ratelimit = new Ratelimit({ redis, limiter: Ratelimit.fixedWindow(100, '1h') })",
+      "Check: const { success, limit, remaining, reset } = await ratelimit.limit(identifier)",
+      "Add response headers: headers.set('X-RateLimit-Limit', limit); headers.set('X-RateLimit-Remaining', remaining)",
+      "Use in middleware for global rate limiting or in individual API routes"
+    ],
+    "tags": ["redis", "rate-limiting", "upstash", "security", "api-protection"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ratelimit-ts/overview"],
+    "version": "@upstash/ratelimit@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis embedding cache", "cache vector embeddings", "avoid recomputing embeddings", "AI embedding cost reduction"],
+    "root_cause": "Embedding API calls are expensive and slow; caching prevents redundant computation",
+    "fix": [
+      "Hash input text for cache key: const cacheKey = `embed:${crypto.createHash('sha256').update(text).digest('hex')}`",
+      "Check cache first: const cached = await redis.get<number[]>(cacheKey); if (cached) return cached",
+      "Store after computing: await redis.set(cacheKey, embedding, { ex: 86400 * 7 }) // 7 day TTL",
+      "For batch: use redis.mget() and redis.mset() for multiple embeddings",
+      "Pipeline for efficiency: const pipe = redis.pipeline(); texts.forEach(t => pipe.get(`embed:${hash(t)}`)); const results = await pipe.exec()",
+      "Consider memory: 1536-dim float32 embedding ≈ 6KB; plan TTL and eviction accordingly"
+    ],
+    "tags": ["redis", "embeddings", "cache", "ai", "vector", "cost-optimization"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/pipeline"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis retrieval cache for RAG", "cache RAG query results", "semantic search cache", "LLM response cache"],
+    "root_cause": "RAG retrieval and LLM calls are expensive; caching similar queries reduces cost and latency",
+    "fix": [
+      "Cache by query hash: const cacheKey = `rag:${crypto.createHash('sha256').update(query.toLowerCase().trim()).digest('hex')}`",
+      "Store retrieval results: await redis.set(cacheKey, JSON.stringify({ chunks, answer, timestamp: Date.now() }), { ex: 3600 })",
+      "Check cache before retrieval: const cached = await redis.get(cacheKey); if (cached) return JSON.parse(cached)",
+      "For semantic caching (similar but not exact queries): use Upstash Vector for similarity-based cache lookup",
+      "Invalidate on knowledge base update: await redis.del(...keys) or use key prefix with scan: const keys = await redis.keys('rag:*')",
+      "Set shorter TTL for time-sensitive data, longer for stable knowledge base content"
+    ],
+    "tags": ["redis", "rag", "cache", "retrieval", "ai", "llm", "semantic-cache"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/vector/overall/whatis"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis session storage Next.js", "serverless session management", "stateless session with Redis"],
+    "root_cause": "Need shared session state across serverless function instances on Vercel",
+    "fix": [
+      "Store session data: await redis.set(`session:${sessionId}`, JSON.stringify(sessionData), { ex: 86400 })",
+      "Retrieve session: const session = await redis.get<SessionData>(`session:${sessionId}`)",
+      "Generate session ID: const sessionId = crypto.randomUUID()",
+      "Set session cookie: cookies().set('session_id', sessionId, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 86400 })",
+      "Extend session on activity: await redis.expire(`session:${sessionId}`, 86400)",
+      "Delete on logout: await redis.del(`session:${sessionId}`); cookies().delete('session_id')",
+      "For auth sessions with NextAuth: configure Upstash Redis adapter"
+    ],
+    "tags": ["redis", "session", "authentication", "cookies", "serverless"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/tutorials/session"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis temporary event buffer", "buffer events before batch processing", "event aggregation with Redis"],
+    "root_cause": "Need to buffer incoming events and process them in batches to reduce database writes",
+    "fix": [
+      "Push events to Redis list: await redis.lpush('event-buffer:analytics', JSON.stringify(event))",
+      "Set buffer size limit: if (await redis.llen('event-buffer:analytics') >= 100) { await flushBuffer() }",
+      "Flush with atomic pop: const events = await redis.lrange('event-buffer:analytics', 0, 99); await redis.ltrim('event-buffer:analytics', 100, -1)",
+      "Use sorted set for time-ordered buffer: await redis.zadd('event-buffer', { score: Date.now(), member: JSON.stringify(event) })",
+      "Flush periodically via cron/QStash: schedule /api/flush-buffer every 5 minutes",
+      "Alternative: use Redis Stream: await redis.xadd('events', '*', event) for ordered event log"
+    ],
+    "tags": ["redis", "event-buffer", "batching", "analytics", "stream"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/lists"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis retry state tracking", "track failed job retries", "exponential backoff state", "retry counter Redis"],
+    "root_cause": "Need to track retry attempts and implement backoff logic for failed operations",
+    "fix": [
+      "Track retry count: const retryKey = `retry:${jobId}`; const attempts = await redis.incr(retryKey)",
+      "Set max retries with TTL: await redis.expire(retryKey, 86400) // auto-cleanup after 24h",
+      "Check before retry: if (attempts > maxRetries) { await moveToDeadLetter(job); return }",
+      "Calculate backoff: const delay = Math.min(Math.pow(2, attempts) * 1000, 300000) // max 5 min",
+      "Store retry metadata: await redis.hset(`retry-meta:${jobId}`, { attempts, lastError: error.message, lastAttempt: Date.now(), nextRetry: Date.now() + delay })",
+      "Schedule retry with QStash delay: await qstash.publishJSON({ url: endpoint, body: job, delay: delay / 1000 })",
+      "Clean up on success: await redis.del(`retry:${jobId}`, `retry-meta:${jobId}`)"
+    ],
+    "tags": ["redis", "retry", "backoff", "job-tracking", "error-recovery"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/hash"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Redis cache-aside pattern", "application level caching", "cache warming strategy"],
+    "root_cause": "Need efficient cache-aside pattern for database query results",
+    "fix": [
+      "Implement cache-aside: async function getCached<T>(key: string, fetcher: () => Promise<T>, ttl = 3600): Promise<T> { const cached = await redis.get<T>(key); if (cached) return cached; const fresh = await fetcher(); await redis.set(key, fresh, { ex: ttl }); return fresh; }",
+      "Use with database queries: const users = await getCached('users:all', () => prisma.user.findMany(), 300)",
+      "Invalidate on mutation: await redis.del('users:all') // in server action after write",
+      "Use tags for group invalidation: store keys in a set: await redis.sadd('tag:users', cacheKey)",
+      "Invalidate by tag: const keys = await redis.smembers('tag:users'); if (keys.length) await redis.del(...keys, 'tag:users')"
+    ],
+    "tags": ["redis", "cache", "cache-aside", "patterns", "database"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://upstash.com/docs/redis/overall/getstarted"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Redis connection error on Vercel", "Upstash Redis timeout", "FETCH_ERROR from Redis"],
+    "root_cause": "Upstash Redis REST URL or token misconfigured, or network issue in serverless environment",
+    "fix": [
+      "Verify UPSTASH_REDIS_REST_URL starts with https:// (not redis://)",
+      "Upstash uses REST API over HTTP - no TCP connections needed",
+      "Check token hasn't been rotated: regenerate in Upstash console if needed",
+      "Add retry logic: Redis.fromEnv() has automatic retries; configure with { automaticDeserialization: true }",
+      "For edge runtime: Upstash REST client works natively (no Node.js TCP needed)",
+      "Test connection: const result = await redis.ping(); // should return 'PONG'"
+    ],
+    "tags": ["redis", "upstash", "connection", "vercel", "debugging"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/overall/getstarted"],
+    "version": "@upstash/redis@1+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["local development environment setup", "Next.js dev workflow", "hot reload not working"],
+    "root_cause": "Need optimized local development setup with proper tooling for Next.js TypeScript project",
+    "fix": [
+      "Start dev server: npm run dev (uses Turbopack in Next.js 14+: next dev --turbo)",
+      "Enable Turbopack for faster HMR: next dev --turbopack",
+      "Configure .env.local for local database URLs and API keys",
+      "Use SQLite locally, Turso/Neon in production for faster iteration",
+      "Install recommended VS Code extensions: Tailwind IntelliSense, Prisma, ESLint, Pretty TypeScript Errors"
+    ],
+    "tags": ["local-dev", "dx", "hot-reload", "turbopack", "typescript"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/getting-started/installation"],
+    "version": "next@14+"
+  },
+  {
+    "type": "config_issue",
+    "symptoms": ["ESLint errors with TypeScript", "lint rules conflicting", "eslint-config-next issues"],
+    "root_cause": "ESLint configuration not properly set up for Next.js + TypeScript + Tailwind",
+    "fix": [
+      "Use Next.js built-in: extends: ['next/core-web-vitals', 'next/typescript']",
+      "Add Prettier compatibility: npm i -D prettier eslint-config-prettier && add 'prettier' to extends array last",
+      "For strict: add '@typescript-eslint/recommended-type-checked' (requires parserOptions.project)",
+      "Tailwind class sorting: npm i -D prettier-plugin-tailwindcss (add to prettier config plugins)",
+      "Ignore generated files: add '.next', 'node_modules', 'prisma/generated' to .eslintignore"
+    ],
+    "tags": ["eslint", "typescript", "prettier", "tailwind", "local-dev", "configuration"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/eslint"],
+    "version": "next@14+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Zod validation with TypeScript", "type-safe form validation", "runtime validation Next.js"],
+    "root_cause": "Need runtime validation that integrates with TypeScript type system for forms and API inputs",
+    "fix": [
+      "Install: npm install zod",
+      "Define schema: const CreateUserSchema = z.object({ email: z.string().email(), name: z.string().min(2), age: z.number().min(18).optional() })",
+      "Infer type: type CreateUser = z.infer<typeof CreateUserSchema>",
+      "Validate in server action: const result = CreateUserSchema.safeParse(formData); if (!result.success) return { errors: result.error.flatten().fieldErrors }",
+      "Validate API body: const body = CreateUserSchema.parse(await request.json()) // throws ZodError",
+      "Use with react-hook-form: npm install @hookform/resolvers; resolver: zodResolver(CreateUserSchema)"
+    ],
+    "tags": ["zod", "validation", "typescript", "forms", "type-safety"],
+    "severity": "low",
+    "frequency": "very-common",
+    "related_docs": ["https://zod.dev/"],
+    "version": "zod@3+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["TypeScript error: Type 'X' is not assignable to type 'Y'", "generic type inference failing", "complex type errors"],
+    "root_cause": "TypeScript strict mode catching type mismatches in component props or API responses",
+    "fix": [
+      "For API responses: define explicit return types or use zod inference",
+      "For dynamic data: use type guards: function isUser(data: unknown): data is User { return typeof data === 'object' && data !== null && 'id' in data }",
+      "For union types: use discriminated unions with a 'type' field",
+      "For generic components: use satisfies operator: const config = { ... } satisfies Config",
+      "For third-party types: use module augmentation or declaration merging in .d.ts files"
+    ],
+    "tags": ["typescript", "type-errors", "generics", "type-guards", "debugging"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://www.typescriptlang.org/docs/handbook/2/narrowing.html"],
+    "version": "typescript@5+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["shared types between client and server", "API type safety end-to-end", "type-safe API layer"],
+    "root_cause": "Need type safety across the client-server boundary without code duplication",
+    "fix": [
+      "Define shared types in lib/types.ts: export type ApiResponse<T> = { data: T; error: null } | { data: null; error: string }",
+      "Use zod schemas as single source of truth: export const UserSchema = z.object({...}); export type User = z.infer<typeof UserSchema>",
+      "Type fetch wrapper: async function api<T>(url: string): Promise<ApiResponse<T>> { ... }",
+      "For server actions: return typed results that client components can consume",
+      "Use Prisma generated types for database entities: import { User, Post } from '@prisma/client'"
+    ],
+    "tags": ["typescript", "api", "type-safety", "shared-types", "patterns"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://www.typescriptlang.org/docs/handbook/2/types-from-types.html"],
+    "version": "typescript@5+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["setup Prisma with local PostgreSQL and Neon production", "dual database config", "local pg Neon production"],
+    "root_cause": "Need local PostgreSQL for development speed with Neon for production on Vercel",
+    "fix": [
+      "schema.prisma: datasource db { provider = 'postgresql' url = env('DATABASE_URL') directUrl = env('DIRECT_URL') }",
+      ".env.local (development): DATABASE_URL='postgresql://postgres:postgres@localhost:5432/myapp' DIRECT_URL='postgresql://postgres:postgres@localhost:5432/myapp'",
+      ".env.production (Vercel): DATABASE_URL='postgresql://user:pass@ep-xxx.neon.tech/db?sslmode=require&pgbouncer=true' DIRECT_URL='postgresql://user:pass@ep-xxx.neon.tech/db?sslmode=require'",
+      "Local PostgreSQL with Docker: docker run -d --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:16",
+      "Migrate both: npx prisma migrate dev (local) and npx prisma migrate deploy (CI/production)"
+    ],
+    "tags": ["prisma", "neon", "postgresql", "local-dev", "docker", "configuration"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-migrate/workflows"],
+    "version": "prisma@5+"
+  },
+
+  {
+    "type": "diagnostic_step",
+    "symptoms": ["debug Supabase auth issues", "Supabase session not persisting", "auth callback failing"],
+    "root_cause": "Supabase auth flow requires proper cookie handling and callback URL configuration",
+    "fix": [
+      "Verify auth callback route exists: app/auth/callback/route.ts",
+      "Callback must exchange code for session: const { searchParams } = new URL(request.url); const code = searchParams.get('code'); if (code) { const supabase = createServerClient(...); await supabase.auth.exchangeCodeForSession(code) }",
+      "Ensure middleware refreshes session: call supabase.auth.getUser() in middleware to refresh expired tokens",
+      "Check Supabase Dashboard > Auth > URL Configuration for redirect URLs",
+      "Add localhost:3000 to allowed redirect URLs for local development",
+      "Verify cookies are being set: check browser DevTools > Application > Cookies"
+    ],
+    "tags": ["supabase", "authentication", "debugging", "cookies", "callback"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/auth/server-side/nextjs"],
+    "version": "@supabase/ssr@0.1+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Supabase query slow", "PostgreSQL full table scan", "missing indexes Supabase"],
+    "root_cause": "Database queries not optimized with proper indexes or query structure",
+    "fix": [
+      "Add indexes for filtered columns: CREATE INDEX idx_messages_room_id ON messages(room_id)",
+      "Use compound indexes for common query patterns: CREATE INDEX idx_posts_user_created ON posts(user_id, created_at DESC)",
+      "Check query plan: EXPLAIN ANALYZE SELECT * FROM messages WHERE room_id = '...'",
+      "Use Supabase Dashboard > Database > Query Performance for slow query identification",
+      "Paginate with cursor-based pagination: .from('posts').select().lt('created_at', cursor).order('created_at', { ascending: false }).limit(20)",
+      "Use select() to fetch only needed columns: .select('id, title, created_at') instead of .select('*')"
+    ],
+    "tags": ["supabase", "postgresql", "performance", "indexes", "queries"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/database/query-optimization"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Supabase database functions", "PostgreSQL RPC calls", "stored procedures Supabase"],
+    "root_cause": "Need server-side logic executed in database for performance or security",
+    "fix": [
+      "Create function in SQL: CREATE OR REPLACE FUNCTION get_nearby_users(lat float, lng float) RETURNS SETOF users AS $$ SELECT * FROM users WHERE earth_distance(ll_to_earth(lat, lng), ll_to_earth(users.lat, users.lng)) < 1000 $$ LANGUAGE sql",
+      "Call via client: const { data } = await supabase.rpc('get_nearby_users', { lat: 40.7, lng: -74.0 })",
+      "TypeScript types: generate with supabase gen types typescript --project-id your-project > database.types.ts",
+      "Use for complex logic that would require multiple round-trips from application",
+      "Functions respect RLS by default; use SECURITY DEFINER to bypass (carefully)"
+    ],
+    "tags": ["supabase", "postgresql", "rpc", "functions", "database"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://supabase.com/docs/guides/database/functions"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Supabase storage file upload", "image upload to Supabase", "file management Next.js Supabase"],
+    "root_cause": "Need to handle file uploads through Supabase Storage with proper access control",
+    "fix": [
+      "Upload: const { data, error } = await supabase.storage.from('avatars').upload(`${userId}/${file.name}`, file, { cacheControl: '3600', upsert: true })",
+      "Get public URL: const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl('path/to/file')",
+      "Create signed URL: const { data } = await supabase.storage.from('private').createSignedUrl('path', 3600)",
+      "Set bucket policies in Dashboard or SQL for access control",
+      "From server action: use supabase.storage with service role for elevated access",
+      "Max file size: configure per bucket in Supabase Dashboard (default 50MB)"
+    ],
+    "tags": ["supabase", "storage", "file-upload", "images", "access-control"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/storage"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "error",
+    "symptoms": ["Supabase type errors after schema change", "TypeScript types out of sync with Supabase", "database.types.ts outdated"],
+    "root_cause": "Auto-generated TypeScript types not regenerated after database schema changes",
+    "fix": [
+      "Regenerate types: npx supabase gen types typescript --project-id your-project-id > src/lib/database.types.ts",
+      "Add to scripts: \"db:types\": \"supabase gen types typescript --project-id $PROJECT_ID > src/lib/database.types.ts\"",
+      "Use generated types: import { Database } from '@/lib/database.types'; type Message = Database['public']['Tables']['messages']['Row']",
+      "Pass to client: createClient<Database>(url, key)",
+      "Run after every migration: npx supabase db push && npm run db:types",
+      "For local dev: npx supabase gen types typescript --local > src/lib/database.types.ts"
+    ],
+    "tags": ["supabase", "typescript", "code-generation", "schema", "types"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/api/rest/generating-types"],
+    "version": "@supabase/supabase-js@2+"
+  },
+
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis distributed lock", "prevent concurrent execution", "mutex in serverless"],
+    "root_cause": "Need to prevent multiple serverless function instances from executing the same critical section concurrently",
+    "fix": [
+      "Acquire lock: const lockKey = `lock:${resource}`; const acquired = await redis.set(lockKey, instanceId, { nx: true, ex: 30 })",
+      "If not acquired, another instance holds it: if (!acquired) return { error: 'Resource locked' }",
+      "Release after work: await redis.eval('if redis.call(\"get\",KEYS[1]) == ARGV[1] then return redis.call(\"del\",KEYS[1]) else return 0 end', [lockKey], [instanceId])",
+      "Use Lua script to ensure only the lock owner can release",
+      "Set reasonable TTL to prevent deadlocks if instance crashes: ex: 30 (seconds)",
+      "For longer tasks, implement lock renewal: setInterval(() => redis.expire(lockKey, 30), 10000)"
+    ],
+    "tags": ["redis", "distributed-lock", "concurrency", "mutex", "serverless"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/set"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Redis pub/sub for serverless", "real-time notifications with Redis", "event broadcasting Redis"],
+    "root_cause": "Need lightweight pub/sub for event broadcasting without full WebSocket infrastructure",
+    "fix": [
+      "Note: Traditional Redis pub/sub requires persistent connections - not ideal for serverless",
+      "For serverless: use Redis Streams or polling instead of pub/sub",
+      "Publish event: await redis.xadd('notifications:user123', '*', { type: 'message', data: JSON.stringify(payload) })",
+      "Read events: await redis.xrange('notifications:user123', lastId || '0', '+', 10)",
+      "For real-time in browser: use Supabase Realtime or Server-Sent Events with polling",
+      "Alternative: use QStash to fan-out events to multiple endpoints"
+    ],
+    "tags": ["redis", "pub-sub", "events", "serverless", "notifications"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/streams"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Redis pipeline for batch operations", "too many Redis round trips", "Redis latency in serverless"],
+    "root_cause": "Multiple sequential Redis commands cause accumulated network latency in serverless",
+    "fix": [
+      "Use pipeline for multiple commands: const pipe = redis.pipeline(); pipe.get('key1'); pipe.set('key2', 'val'); pipe.incr('counter'); const results = await pipe.exec()",
+      "Pipeline sends all commands in single HTTP request (with Upstash REST)",
+      "Batch cache reads: const pipe = redis.pipeline(); keys.forEach(k => pipe.get(k)); const values = await pipe.exec()",
+      "Use multi/exec for atomic transactions: const tx = redis.multi(); tx.incr('counter'); tx.lpush('log', entry); const results = await tx.exec()",
+      "Reduces N round trips to 1 - critical for serverless latency",
+      "Pipeline limit: up to 1000 commands per pipeline on Upstash"
+    ],
+    "tags": ["redis", "pipeline", "performance", "batching", "latency"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/pipeline"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Redis key expiration race condition", "cache stampede", "thundering herd on cache miss"],
+    "root_cause": "Multiple requests simultaneously find expired cache key and all hit the database",
+    "fix": [
+      "Implement cache stampede protection with probabilistic early expiry",
+      "Use lock-based recomputation: only one instance refreshes, others wait or serve stale",
+      "Pattern: const stale = await redis.get(key); if (!stale) { const lock = await redis.set(`lock:${key}`, '1', { nx: true, ex: 10 }); if (lock) { const fresh = await fetchData(); await redis.set(key, fresh, { ex: ttl }); return fresh } else { await sleep(100); return redis.get(key) } }",
+      "Or use stale-while-revalidate: store with extra buffer TTL, recompute in background when near expiry",
+      "Set jittered TTL to prevent synchronized expiration: ex: ttl + Math.random() * ttl * 0.1"
+    ],
+    "tags": ["redis", "cache-stampede", "race-condition", "performance", "patterns"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/blog/cache-stampede"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "doc",
+    "symptoms": ["Redis data structures for common use cases", "when to use which Redis type", "Redis type selection"],
+    "root_cause": "Need to choose the right Redis data structure for different use cases",
+    "fix": [
+      "String (GET/SET): simple cache, counters, locks, feature flags, session data",
+      "Hash (HSET/HGET): user profiles, object storage, grouped counters (hgetall for full object)",
+      "List (LPUSH/LRANGE): event buffers, recent items, queues (FIFO with LPUSH/RPOP)",
+      "Set (SADD/SMEMBERS): unique collections, tags, dedup tracking, online users",
+      "Sorted Set (ZADD/ZRANGE): leaderboards, rate limiting windows, priority queues, time-series",
+      "Stream (XADD/XRANGE): event logs, message queues with consumer groups, audit trails"
+    ],
+    "tags": ["redis", "data-structures", "patterns", "architecture", "best-practices"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/overall/rediscompatibility"],
+    "version": "@upstash/redis@1+"
+  },
+
+  {
+    "type": "config_issue",
+    "symptoms": ["Tailwind v4 migration issues", "Tailwind CSS not working after upgrade", "@tailwind directives deprecated"],
+    "root_cause": "Tailwind v4 uses new CSS-based configuration and import syntax",
+    "fix": [
+      "Tailwind v4 uses: @import 'tailwindcss' instead of @tailwind base/components/utilities",
+      "Configuration moves to CSS: @theme { --color-primary: #3b82f6; }",
+      "No more tailwind.config.js in v4 - all config in CSS with @theme directive",
+      "For Next.js: ensure PostCSS processes the new syntax correctly",
+      "Migration: npx @tailwindcss/upgrade to auto-migrate from v3 to v4",
+      "Stick with v3 if ecosystem (shadcn/ui, etc.) hasn't fully migrated"
+    ],
+    "tags": ["tailwind", "migration", "css", "configuration", "v4"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://tailwindcss.com/docs/v4-beta"],
+    "version": "tailwindcss@4+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Tailwind animations and transitions", "smooth UI transitions", "loading states with Tailwind"],
+    "root_cause": "Need polished animations and transitions for better user experience",
+    "fix": [
+      "Basic transition: className='transition-all duration-300 ease-in-out hover:scale-105'",
+      "Fade in: className='animate-in fade-in duration-500' (with tailwindcss-animate plugin)",
+      "Skeleton loading: className='animate-pulse bg-gray-200 rounded h-4 w-full'",
+      "Slide in: extend keyframes in config or use: className='transition-transform translate-y-0' with conditional 'translate-y-full'",
+      "Install tailwindcss-animate: npm i tailwindcss-animate && add to plugins in tailwind.config",
+      "Group hover: className='group-hover:opacity-100 opacity-0 transition-opacity' on child with 'group' on parent"
+    ],
+    "tags": ["tailwind", "animations", "transitions", "ux", "loading-states"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/animation"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement QStash webhook handler", "verify QStash signature", "secure QStash endpoint"],
+    "root_cause": "Need to securely verify that incoming requests are from QStash and not spoofed",
+    "fix": [
+      "Install: npm install @upstash/qstash",
+      "Create receiver: import { Receiver } from '@upstash/qstash'; const receiver = new Receiver({ currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY!, nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY! })",
+      "Verify in route handler: const body = await request.text(); const isValid = await receiver.verify({ signature: request.headers.get('upstash-signature')!, body })",
+      "Reject invalid: if (!isValid) return new Response('Invalid signature', { status: 401 })",
+      "Parse body after verification: const data = JSON.parse(body)",
+      "Set QSTASH_CURRENT_SIGNING_KEY and QSTASH_NEXT_SIGNING_KEY from Upstash console"
+    ],
+    "tags": ["qstash", "upstash", "webhook", "security", "verification"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/qstash/receiving/verifying-signatures"],
+    "version": "@upstash/qstash@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Inngest throttle and concurrency", "limit concurrent function executions", "prevent overloading external API"],
+    "root_cause": "Need to control execution rate to avoid overwhelming external services or databases",
+    "fix": [
+      "Set concurrency limit: inngest.createFunction({ id: 'send-email', concurrency: { limit: 5 } }, ...)",
+      "Throttle execution rate: inngest.createFunction({ id: 'api-call', throttle: { limit: 10, period: '1m' } }, ...)",
+      "Rate limit per key: throttle: { limit: 1, period: '1s', key: 'event.data.userId' }",
+      "Priority queue: priority: { run: 'event.data.priority' } // higher number = higher priority",
+      "Debounce: debounce: { period: '5s', key: 'event.data.userId' } // only last event in window executes",
+      "Use for API rate limits, email sending, webhook delivery"
+    ],
+    "tags": ["inngest", "throttle", "concurrency", "rate-limiting", "patterns"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/guides/throttling"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Inngest function timeout", "step execution exceeded time limit", "Inngest function cancelled"],
+    "root_cause": "Individual steps in Inngest functions have execution time limits based on hosting platform",
+    "fix": [
+      "On Vercel: each step is limited by your function's maxDuration (10s hobby, 60s pro)",
+      "Break long operations into smaller steps: each step.run() is a separate serverless invocation",
+      "Stream large data processing across multiple steps: for (const batch of chunks) { await step.run(`process-${i}`, () => processBatch(batch)) }",
+      "Set maxDuration in route config: export const maxDuration = 60 (for the Inngest serve endpoint)",
+      "Use step.sleep() for delays instead of blocking: await step.sleep('wait', '30s')",
+      "Each step can retry independently without re-running completed steps"
+    ],
+    "tags": ["inngest", "timeout", "serverless", "steps", "vercel"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/features/inngest-functions/steps-workflows"],
+    "version": "inngest@3+"
+  },
+
+  {
+    "type": "doc",
+    "symptoms": ["SQLite vs PostgreSQL for local development", "when to use SQLite locally", "database strategy local vs production"],
+    "root_cause": "Need to decide on database strategy that balances local development speed with production requirements",
+    "fix": [
+      "SQLite locally + Turso production: best for simple schemas, fast local iteration, no Docker needed",
+      "PostgreSQL locally + Neon production: best when using PG-specific features (JSONB, full-text search, arrays)",
+      "Supabase local (supabase start) + Supabase cloud: best for realtime features, auth integration, storage",
+      "SQLite path: use @libsql/client or better-sqlite3 locally, Turso in production",
+      "PostgreSQL path: Docker locally, Neon serverless in production with Prisma ORM",
+      "Decision factors: need realtime? → Supabase. Simple CRUD? → SQLite/Turso. Complex queries? → PostgreSQL/Neon"
+    ],
+    "tags": ["database", "sqlite", "postgresql", "local-dev", "architecture", "decision"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://docs.turso.tech/", "https://neon.tech/docs/introduction"],
+    "version": "n/a"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement feature flags with Redis", "toggle features without deployment", "A/B testing flags"],
+    "root_cause": "Need to control feature rollout and A/B testing without redeployment",
+    "fix": [
+      "Store flags: await redis.hset('feature-flags', { 'new-ui': 'true', 'beta-chat': 'false', 'ai-enabled': '0.5' })",
+      "Check flag: const flags = await redis.hgetall<Record<string, string>>('feature-flags')",
+      "Percentage rollout: const enabled = parseFloat(flags['ai-enabled']) > Math.random()",
+      "User-specific: await redis.sismember('beta-users', userId) // Set-based targeting",
+      "Cache flags in request scope to avoid multiple Redis calls per page",
+      "Update without deploy: await redis.hset('feature-flags', { 'new-ui': 'false' })",
+      "Consider Vercel Edge Config for ultra-low-latency flag reads at edge"
+    ],
+    "tags": ["redis", "feature-flags", "a-b-testing", "rollout", "configuration"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/storage/edge-config"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "root_cause",
+    "symptoms": ["Prisma query returns null unexpectedly", "findUnique returns null", "data not found after insert"],
+    "root_cause": "Query filter doesn't match due to case sensitivity, type mismatch, or eventual consistency",
+    "fix": [
+      "Check case sensitivity: PostgreSQL text comparison is case-sensitive by default",
+      "Use case-insensitive filter: prisma.user.findFirst({ where: { email: { equals: email, mode: 'insensitive' } } })",
+      "Verify ID types match: UUID strings vs auto-increment integers",
+      "After insert, use returned data instead of separate query: const user = await prisma.user.create({ data: {...} })",
+      "For Neon: serverless driver may have slight delay after write - use the same connection for read-after-write",
+      "Check if RLS (Supabase) or tenant filters are excluding the row"
+    ],
+    "tags": ["prisma", "queries", "null", "debugging", "postgresql"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/queries/filtering-and-sorting"],
+    "version": "prisma@5+"
+  },
+  {
+    "type": "error",
+    "symptoms": ["Prisma P2002 unique constraint violation", "unique constraint failed", "duplicate key error"],
+    "root_cause": "Attempting to create/update a record that violates a unique constraint in the database",
+    "fix": [
+      "Use upsert for create-or-update: await prisma.user.upsert({ where: { email }, create: { email, name }, update: { name } })",
+      "Handle error gracefully: try { await prisma.user.create({...}) } catch (e) { if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') { return { error: 'Email already exists' } } throw e }",
+      "For soft-dedup: check existence first with findUnique before create",
+      "Identify which field: e.meta?.target contains the constraint field name",
+      "Use Redis dedup to prevent race conditions before DB write"
+    ],
+    "tags": ["prisma", "database", "unique-constraint", "error-handling", "upsert"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/reference/error-reference#p2002"],
+    "version": "prisma@5+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["optimistic updates Next.js", "instant UI feedback", "useOptimistic pattern"],
+    "root_cause": "Need instant UI feedback while server action processes in background",
+    "fix": [
+      "Use useOptimistic hook: const [optimisticMessages, addOptimistic] = useOptimistic(messages, (state, newMsg) => [...state, { ...newMsg, pending: true }])",
+      "In form action: addOptimistic(newMessage); await sendMessage(formData)",
+      "Show pending state: className={message.pending ? 'opacity-50' : ''}",
+      "Revalidate after action: revalidatePath('/chat') to sync with server state",
+      "Handle errors: if server action fails, optimistic state is automatically rolled back on next revalidation",
+      "Combine with useTransition for loading states: const [isPending, startTransition] = useTransition()"
+    ],
+    "tags": ["react", "optimistic-updates", "ux", "server-actions", "app-router"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://react.dev/reference/react/useOptimistic"],
+    "version": "react@19+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement webhook processing pipeline", "reliable webhook handler", "idempotent webhook processing"],
+    "root_cause": "Need reliable, idempotent webhook processing with deduplication and retry tracking",
+    "fix": [
+      "1. Receive webhook → verify signature → extract delivery ID",
+      "2. Dedup check: const isDup = await redis.set(`webhook:${deliveryId}`, '1', { nx: true, ex: 86400 }); if (!isDup) return Response.json({ status: 'duplicate' })",
+      "3. Store payload: await redis.set(`webhook-payload:${deliveryId}`, JSON.stringify(payload), { ex: 86400 })",
+      "4. Queue for processing: await inngest.send({ name: 'webhook/received', data: { deliveryId, source: 'stripe' } })",
+      "5. Process in Inngest function with retry: const payload = await step.run('get-payload', () => redis.get(`webhook-payload:${deliveryId}`))",
+      "6. Return 200 immediately to webhook sender, process async",
+      "7. Track status: await redis.hset(`webhook-status:${deliveryId}`, { status: 'processed', processedAt: Date.now() })"
+    ],
+    "tags": ["webhooks", "redis", "inngest", "deduplication", "idempotency", "pipeline"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/guides/handling-webhooks"],
+    "version": "inngest@3+"
+  },
+
+  {
+    "type": "code_pattern",
+    "symptoms": ["Next.js middleware patterns", "auth middleware with Redis session", "combine middleware concerns"],
+    "root_cause": "Need to compose multiple middleware concerns (auth, rate limiting, logging) in Next.js",
+    "fix": [
+      "Single middleware.ts file handles all concerns in sequence",
+      "Pattern: export async function middleware(req: NextRequest) { const rateLimit = await checkRateLimit(req); if (!rateLimit.success) return Response.json({error:'Rate limited'}, {status:429}); const session = await validateSession(req); if (!session && isProtectedPath(req)) return NextResponse.redirect(new URL('/login', req.url)); return NextResponse.next() }",
+      "Use matcher to skip static assets: export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'] }",
+      "For heavy middleware logic: keep fast, defer complex work to API routes",
+      "Middleware runs on edge - ensure all imports are edge-compatible"
+    ],
+    "tags": ["middleware", "authentication", "rate-limiting", "patterns", "edge-runtime"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/middleware"],
+    "version": "next@13+"
+  },
+  {
+    "type": "diagnostic_step",
+    "symptoms": ["Turso database too large", "SQLite file size growing", "storage limits Turso"],
+    "root_cause": "Database growing beyond expected size due to WAL, deleted data, or inefficient schema",
+    "fix": [
+      "Check size: turso db show your-db-name",
+      "Vacuum database to reclaim space: VACUUM (removes deleted rows from file)",
+      "Check largest tables: SELECT name, SUM(pgsize) as size FROM dbstat GROUP BY name ORDER BY size DESC",
+      "Implement data retention: DELETE FROM logs WHERE created_at < datetime('now', '-30 days')",
+      "Use INTEGER instead of TEXT for IDs where possible (more compact)",
+      "Consider partitioning large tables or archiving old data",
+      "Turso free tier: 9GB total storage across all databases"
+    ],
+    "tags": ["turso", "sqlite", "storage", "performance", "maintenance"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://docs.turso.tech/concepts#database-storage"],
+    "version": "@libsql/client@0.5+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement search with SQLite FTS", "full-text search Turso", "search functionality local"],
+    "root_cause": "Need full-text search capability using SQLite FTS5 for local/Turso databases",
+    "fix": [
+      "Create FTS table: CREATE VIRTUAL TABLE posts_fts USING fts5(title, content, content=posts, content_rowid=id)",
+      "Populate: INSERT INTO posts_fts(rowid, title, content) SELECT id, title, content FROM posts",
+      "Search: SELECT posts.* FROM posts_fts JOIN posts ON posts.id = posts_fts.rowid WHERE posts_fts MATCH 'search term' ORDER BY rank",
+      "Auto-sync with triggers: CREATE TRIGGER posts_ai AFTER INSERT ON posts BEGIN INSERT INTO posts_fts(rowid, title, content) VALUES (new.id, new.title, new.content); END",
+      "Snippet highlighting: SELECT snippet(posts_fts, 1, '<mark>', '</mark>', '...', 32) as snippet FROM posts_fts WHERE posts_fts MATCH ?",
+      "Works on both local SQLite and Turso"
+    ],
+    "tags": ["sqlite", "turso", "full-text-search", "fts5", "search"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://www.sqlite.org/fts5.html"],
+    "version": "sqlite@3.9+"
+  },
+  {
+    "type": "error",
+    "symptoms": ["Inngest function not found in production", "Inngest sync failed Vercel", "functions not registered"],
+    "root_cause": "Inngest serve endpoint not properly deployed or functions not included in serve() call",
+    "fix": [
+      "Ensure all functions are exported and passed to serve: export const { GET, POST, PUT } = serve({ client: inngest, functions: [fn1, fn2, fn3] })",
+      "Check that the serve route is accessible: visit https://your-app.vercel.app/api/inngest",
+      "Sync manually from Inngest dashboard if auto-sync fails",
+      "Verify INNGEST_SIGNING_KEY is set in Vercel (not needed for dev, required for production)",
+      "Check Inngest dashboard > Apps for sync status and errors",
+      "For Vercel: install Inngest Vercel integration for automatic sync on deploy"
+    ],
+    "tags": ["inngest", "deployment", "vercel", "configuration", "sync"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://www.inngest.com/docs/deploy/vercel"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Tailwind CSS file large in development", "slow CSS compilation", "PostCSS slow"],
+    "root_cause": "Tailwind development build includes all utilities; PostCSS processing can be slow on large projects",
+    "fix": [
+      "Use Turbopack: next dev --turbopack for faster CSS processing",
+      "Minimize content paths: only include directories that actually use Tailwind classes",
+      "Split CSS: use CSS Modules for component-specific styles, Tailwind for utility classes",
+      "Production is always optimized: Tailwind v3+ only includes used classes in production build",
+      "For very large projects: consider using Tailwind's JIT engine (default in v3+)",
+      "Avoid @apply in most cases - it increases CSS size; use component composition instead"
+    ],
+    "tags": ["tailwind", "performance", "development", "postcss", "build"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://tailwindcss.com/docs/optimizing-for-production"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Supabase Edge Functions vs Vercel Functions", "where to put serverless logic", "function architecture"],
+    "root_cause": "Need to decide between Supabase Edge Functions and Vercel Serverless Functions for backend logic",
+    "fix": [
+      "Use Vercel Functions (Next.js API routes) for: page-related logic, SSR data fetching, user-facing API endpoints",
+      "Use Supabase Edge Functions for: database triggers, webhook handlers, background tasks close to data",
+      "Use Inngest/QStash for: long-running workflows, scheduled jobs, event-driven processing",
+      "Vercel functions have better Next.js integration (caching, revalidation, streaming)",
+      "Supabase functions have direct database access without network hop",
+      "Most Next.js apps should primarily use Vercel API routes and reserve Supabase functions for DB-adjacent tasks"
+    ],
+    "tags": ["architecture", "supabase", "vercel", "serverless", "functions", "decision"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://supabase.com/docs/guides/functions"],
+    "version": "n/a"
+  },
+
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis leaderboard implementation", "sorted ranking with Redis", "top-N query Redis"],
+    "root_cause": "Need a real-time leaderboard or ranking system with efficient top-N queries",
+    "fix": [
+      "Add score: await redis.zadd('leaderboard:weekly', { score: points, member: userId })",
+      "Get top 10: await redis.zrange('leaderboard:weekly', 0, 9, { rev: true, withScores: true })",
+      "Get user rank: await redis.zrevrank('leaderboard:weekly', userId)",
+      "Increment score: await redis.zincrby('leaderboard:weekly', incrementBy, userId)",
+      "Get user score: await redis.zscore('leaderboard:weekly', userId)",
+      "Reset weekly: await redis.del('leaderboard:weekly') // via cron/QStash",
+      "Combine with user data: fetch user details from DB after getting ranked IDs"
+    ],
+    "tags": ["redis", "leaderboard", "sorted-set", "ranking", "real-time"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/sorted-sets"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Next.js parallel routes not loading", "intercepting routes broken", "modal route not showing"],
+    "root_cause": "Parallel and intercepting routes have strict file naming conventions that must be followed exactly",
+    "fix": [
+      "Parallel routes use @folder convention: app/@modal/page.tsx, app/layout.tsx must accept {modal} prop",
+      "Intercepting routes use (.) (..) (...) convention: app/@modal/(.)photo/[id]/page.tsx",
+      "Layout must render the slot: export default function Layout({ children, modal }) { return <>{children}{modal}</> }",
+      "Provide default.tsx for parallel route slots: app/@modal/default.tsx returning null",
+      "Hard navigation (full page refresh) resets intercepted routes - use Link for soft navigation",
+      "Check file structure carefully - one misnamed folder breaks the entire pattern"
+    ],
+    "tags": ["routing", "parallel-routes", "intercepting-routes", "modals", "app-router"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/routing/parallel-routes"],
+    "version": "next@13.3+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["streaming response Next.js", "AI chat streaming", "server-sent events Next.js"],
+    "root_cause": "Need to stream responses from LLM/AI APIs or long-running processes to the client",
+    "fix": [
+      "Use ReadableStream: return new Response(new ReadableStream({ async start(controller) { for await (const chunk of aiStream) { controller.enqueue(new TextEncoder().encode(chunk)); } controller.close(); } }))",
+      "With AI SDK: import { streamText } from 'ai'; const result = await streamText({ model, messages }); return result.toDataStreamResponse()",
+      "Client consumption with AI SDK: const { messages, isLoading } = useChat({ api: '/api/chat' })",
+      "For SSE: set headers Content-Type: text/event-stream, Cache-Control: no-cache",
+      "Vercel supports streaming in both Node.js and Edge runtime",
+      "Set maxDuration for long streams: export const maxDuration = 60"
+    ],
+    "tags": ["streaming", "ai", "server-sent-events", "llm", "real-time"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://sdk.vercel.ai/docs/getting-started"],
+    "version": "next@13+"
+  },
+  {
+    "type": "diagnostic_step",
+    "symptoms": ["TypeScript build errors only in CI", "type errors on Vercel but not locally", "strict type checking in build"],
+    "root_cause": "Next.js runs type checking during build; local dev may skip strict checks",
+    "fix": [
+      "Run typecheck locally before pushing: npx tsc --noEmit",
+      "Add to CI: \"typecheck\": \"tsc --noEmit\" and run before build",
+      "Check for different TypeScript versions: local vs CI (pin in package.json)",
+      "next build runs strict type checking by default - match this locally",
+      "Common culprits: unused variables (noUnusedLocals), implicit any, missing return types",
+      "To temporarily skip during build (not recommended): typescript: { ignoreBuildErrors: true } in next.config.js",
+      "Fix progressively: use // @ts-expect-error with explanation for known issues"
+    ],
+    "tags": ["typescript", "build", "type-checking", "ci-cd", "debugging"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/typescript"],
+    "version": "next@13+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement email sending with Inngest", "transactional email queue", "reliable email delivery"],
+    "root_cause": "Need reliable email delivery with retry logic and rate limiting for transactional emails",
+    "fix": [
+      "Define email function: inngest.createFunction({ id: 'send-email', throttle: { limit: 10, period: '1s' }, retries: 3 }, { event: 'email/send' }, async ({ event, step }) => { await step.run('send', () => sendEmail(event.data)) })",
+      "Queue email: await inngest.send({ name: 'email/send', data: { to: user.email, template: 'welcome', vars: { name: user.name } } })",
+      "Batch emails: await inngest.send(users.map(u => ({ name: 'email/send', data: { to: u.email, template: 'newsletter' } })))",
+      "Track delivery: await step.run('track', () => redis.hset(`email:${event.data.id}`, { status: 'sent', sentAt: Date.now() }))",
+      "Use Resend, SendGrid, or Postmark as email provider in the step.run"
+    ],
+    "tags": ["inngest", "email", "queue", "retry", "transactional"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/examples/send-emails"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "root_cause",
+    "symptoms": ["Neon branch not syncing", "preview deployment using wrong database", "database branch mismatch"],
+    "root_cause": "Vercel preview deployments not connected to correct Neon database branch",
+    "fix": [
+      "Use Neon-Vercel integration for automatic branch mapping",
+      "Integration auto-creates Neon branch for each Vercel preview deployment",
+      "Set DATABASE_URL per environment in Vercel: Production → main branch, Preview → feature branch",
+      "Without integration: manually create branch: neon branches create --name preview-branch",
+      "Run migrations on preview branch: npx prisma migrate deploy (with preview branch DATABASE_URL)",
+      "Delete unused branches: neon branches delete old-branch-name"
+    ],
+    "tags": ["neon", "vercel", "branching", "preview", "deployment"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://neon.tech/docs/guides/vercel"],
+    "version": "neon@latest"
+  },
+
+  {
+    "type": "code_pattern",
+    "symptoms": ["environment-aware database client", "unified database helper", "multi-environment db config"],
+    "root_cause": "Need a single database utility that works across local dev, preview, and production environments",
+    "fix": [
+      "Create lib/db.ts with environment detection: export function getDb() { if (process.env.DATABASE_PROVIDER === 'sqlite') return getSqliteClient(); if (process.env.DATABASE_PROVIDER === 'supabase') return getSupabaseClient(); return getPrismaClient(); }",
+      "For SQLite/Turso: const client = process.env.NODE_ENV === 'development' ? createClient({ url: 'file:local.db' }) : createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN! })",
+      "For Prisma/Neon: use globalThis singleton pattern",
+      "Set DATABASE_PROVIDER in .env.local and Vercel environment variables",
+      "Export typed helper functions that abstract the provider"
+    ],
+    "tags": ["database", "configuration", "patterns", "multi-environment", "typescript"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/configuring/environment-variables"],
+    "version": "next@13+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement Redis-backed queue for processing", "simple job queue with Redis", "FIFO queue Redis"],
+    "root_cause": "Need a simple reliable job queue when QStash/Inngest is overkill",
+    "fix": [
+      "Enqueue job: await redis.lpush('queue:emails', JSON.stringify({ id: uuid(), type: 'welcome', data: { userId } }))",
+      "Dequeue (via cron/API): const job = await redis.rpop('queue:emails')",
+      "Reliable queue (process and ack): const job = await redis.rpoplpush('queue:emails', 'queue:emails:processing')",
+      "After processing: await redis.lrem('queue:emails:processing', 1, job)",
+      "Check queue length: const pending = await redis.llen('queue:emails')",
+      "Process via Vercel Cron: schedule /api/process-queue every minute",
+      "For complex needs, prefer QStash or Inngest over hand-rolled Redis queue"
+    ],
+    "tags": ["redis", "queue", "job-processing", "patterns", "fifo"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/lists"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Tailwind classes not purged correctly", "dynamic classes missing in production", "conditional styles broken in build"],
+    "root_cause": "Tailwind cannot detect dynamically constructed class names at build time",
+    "fix": [
+      "Never construct classes dynamically: BAD: `bg-${color}-500` or `text-${size}`",
+      "Use complete class names with conditional logic: GOOD: color === 'red' ? 'bg-red-500' : 'bg-blue-500'",
+      "For dynamic values, use inline styles: style={{ backgroundColor: color }}",
+      "Safelist specific patterns if needed: safelist: ['bg-red-500', 'bg-blue-500'] in tailwind.config",
+      "Use cva (class-variance-authority) for variant-based styling",
+      "Map data to complete class names: const colorMap: Record<string, string> = { red: 'bg-red-500', blue: 'bg-blue-500' }"
+    ],
+    "tags": ["tailwind", "purging", "dynamic-classes", "build", "production"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://tailwindcss.com/docs/content-configuration#dynamic-class-names"],
+    "version": "tailwindcss@3+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["reduce Vercel function invocations", "optimize serverless costs", "too many function calls"],
+    "root_cause": "Excessive serverless function invocations increasing cost and latency",
+    "fix": [
+      "Use ISR/caching to serve static content without function invocation",
+      "Implement stale-while-revalidate: export const revalidate = 3600 // serve stale, refresh in background",
+      "Batch API calls: combine multiple small requests into single endpoint",
+      "Use Edge Config for frequently read config data (no function invocation)",
+      "Cache with Redis: check cache before expensive computation",
+      "Use Client Components for interactive features that don't need server data",
+      "Deduplicate with Redis: prevent processing same event multiple times"
+    ],
+    "tags": ["vercel", "serverless", "cost", "optimization", "caching"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/pricing"],
+    "version": "next@13+"
+  },
+  {
+    "type": "doc",
+    "symptoms": ["how to test Next.js locally", "testing setup TypeScript", "unit tests and integration tests"],
+    "root_cause": "Need proper testing setup for Next.js TypeScript project with various testing strategies",
+    "fix": [
+      "Install: npm i -D vitest @testing-library/react @testing-library/jest-dom happy-dom",
+      "Configure vitest.config.ts: import { defineConfig } from 'vitest/config'; export default defineConfig({ test: { environment: 'happy-dom', globals: true, setupFiles: ['./tests/setup.ts'] } })",
+      "Test server actions: directly import and call with mocked dependencies",
+      "Test API routes: use the route handler function directly or fetch with test server",
+      "Database tests: use SQLite in-memory for fast unit tests, real DB for integration",
+      "Scripts: \"test\": \"vitest run\", \"test:watch\": \"vitest\"",
+      "For E2E: use Playwright - npm i -D @playwright/test"
+    ],
+    "tags": ["testing", "vitest", "typescript", "local-dev", "playwright"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/testing"],
+    "version": "vitest@1+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis counter with time window", "rolling window counter", "analytics counter Redis"],
+    "root_cause": "Need time-windowed counters for analytics, usage tracking, or rate limiting",
+    "fix": [
+      "Simple counter with TTL: const key = `counter:${userId}:${getHourBucket()}`; await redis.incr(key); await redis.expire(key, 7200)",
+      "Helper: function getHourBucket() { return Math.floor(Date.now() / 3600000) }",
+      "Get current count: const count = await redis.get<number>(key) ?? 0",
+      "Rolling window with sorted set: await redis.zadd(`hits:${endpoint}`, { score: Date.now(), member: `${Date.now()}-${Math.random()}` }); await redis.zremrangebyscore(`hits:${endpoint}`, 0, Date.now() - 60000); const count = await redis.zcard(`hits:${endpoint}`)",
+      "Daily unique visitors: await redis.pfadd(`uv:${today}`, visitorId); const estimate = await redis.pfcount(`uv:${today}`)",
+      "HyperLogLog for unique counts: uses ~12KB regardless of cardinality"
+    ],
+    "tags": ["redis", "counters", "analytics", "time-window", "hyperloglog"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/hyperloglog"],
+    "version": "@upstash/redis@1+"
+  },
+
+  {
+    "type": "error",
+    "symptoms": ["QStash message delivery failed", "endpoint returned non-2xx", "QStash DLQ growing"],
+    "root_cause": "QStash target endpoint failing or timing out, messages accumulating in dead letter queue",
+    "fix": [
+      "Check target endpoint is publicly accessible (not localhost)",
+      "Endpoint must return 2xx within timeout to acknowledge delivery",
+      "Increase endpoint timeout: export const maxDuration = 60 on the receiving route",
+      "Check QStash Dashboard > Logs for specific error responses",
+      "Handle gracefully: return 200 even if processing will be async (acknowledge receipt, process later)",
+      "Replay failed messages from DLQ after fixing: POST /v2/dlq/{messageId}/replay",
+      "Set proper retries and backoff: retries: 5, backoff: 'exponential'"
+    ],
+    "tags": ["qstash", "upstash", "dead-letter-queue", "delivery", "debugging"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://upstash.com/docs/qstash/features/dead-letter-queue"],
+    "version": "@upstash/qstash@2+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Inngest cron scheduled function", "periodic cleanup job", "scheduled data processing"],
+    "root_cause": "Need scheduled recurring tasks with Inngest instead of Vercel Cron for complex workflows",
+    "fix": [
+      "Define cron function: inngest.createFunction({ id: 'daily-cleanup' }, { cron: '0 2 * * *' }, async ({ step }) => { const deleted = await step.run('cleanup-old-data', () => prisma.log.deleteMany({ where: { createdAt: { lt: thirtyDaysAgo } } })); await step.run('notify', () => sendSlackNotification(`Cleaned ${deleted.count} records`)); })",
+      "Multiple schedules: { cron: ['0 9 * * 1-5', '0 12 * * 6-7'] }",
+      "Use step.run for each atomic operation - automatic retry on failure",
+      "Monitor in Inngest dashboard: see execution history, duration, errors",
+      "Cron expressions in UTC by default"
+    ],
+    "tags": ["inngest", "cron", "scheduling", "cleanup", "automation"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://www.inngest.com/docs/guides/scheduled-functions"],
+    "version": "inngest@3+"
+  },
+  {
+    "type": "root_cause",
+    "symptoms": ["Supabase realtime events delayed", "postgres_changes high latency", "realtime subscription slow"],
+    "root_cause": "Postgres Changes use WAL-based replication which adds latency compared to Broadcast",
+    "fix": [
+      "Postgres Changes typically have 100-500ms latency (WAL → detect → broadcast)",
+      "For lower latency: use Broadcast channel for ephemeral events, only use postgres_changes for persistence",
+      "Pattern: INSERT to DB + simultaneously broadcast via channel for instant UI update",
+      "await supabase.from('messages').insert(msg); channel.send({ type: 'broadcast', event: 'new-message', payload: msg })",
+      "Listen to broadcast for instant update, use postgres_changes as fallback/consistency check",
+      "Reduce payload size: use filter to only subscribe to relevant rows"
+    ],
+    "tags": ["supabase", "realtime", "latency", "broadcast", "performance"],
+    "severity": "medium",
+    "frequency": "occasional",
+    "related_docs": ["https://supabase.com/docs/guides/realtime/broadcast"],
+    "version": "@supabase/supabase-js@2+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement request deduplication middleware", "prevent duplicate form submissions", "idempotency key API"],
+    "root_cause": "Need to prevent duplicate request processing from network retries or double-clicks",
+    "fix": [
+      "Client sends idempotency key: headers: { 'Idempotency-Key': crypto.randomUUID() }",
+      "Middleware checks: const idempotencyKey = request.headers.get('idempotency-key')",
+      "Check Redis: const existing = await redis.get(`idem:${idempotencyKey}`); if (existing) return Response.json(JSON.parse(existing))",
+      "Process request and cache response: const response = await processRequest(); await redis.set(`idem:${idempotencyKey}`, JSON.stringify(response), { ex: 86400 })",
+      "Return cached response for duplicate requests within TTL window",
+      "For forms: generate key on form mount, reuse on retry: useRef(crypto.randomUUID())"
+    ],
+    "tags": ["redis", "idempotency", "deduplication", "middleware", "api"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/blog/implementing-idempotency"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "config_issue",
+    "symptoms": ["Vercel deployment region mismatch", "high latency between function and database", "cross-region database calls"],
+    "root_cause": "Vercel functions and database deployed in different geographic regions causing latency",
+    "fix": [
+      "Set Vercel function region to match database: vercel.json: { \"regions\": [\"iad1\"] }",
+      "Or per-route: export const preferredRegion = 'iad1' in route.ts",
+      "Neon: create database in us-east-1 to match Vercel's default iad1 region",
+      "Turso: use multi-region replicas for global apps, or single region matching Vercel",
+      "Supabase: choose AWS region matching Vercel (us-east-1 = iad1)",
+      "Check current region in Vercel Dashboard > Settings > Functions",
+      "Latency difference: same region ~1-5ms, cross-region ~50-150ms"
+    ],
+    "tags": ["vercel", "regions", "latency", "database", "configuration", "performance"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://vercel.com/docs/functions/configuring-functions/region"],
+    "version": "next@13+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["error handling in server actions", "typed server action responses", "form error state management"],
+    "root_cause": "Need consistent error handling pattern for server actions that works with TypeScript",
+    "fix": [
+      "Define action result type: type ActionResult<T> = { success: true; data: T } | { success: false; error: string; fieldErrors?: Record<string, string[]> }",
+      "Server action: 'use server'; export async function createPost(formData: FormData): Promise<ActionResult<Post>> { const parsed = PostSchema.safeParse(Object.fromEntries(formData)); if (!parsed.success) return { success: false, error: 'Validation failed', fieldErrors: parsed.error.flatten().fieldErrors }; try { const post = await prisma.post.create({ data: parsed.data }); revalidatePath('/posts'); return { success: true, data: post }; } catch (e) { return { success: false, error: 'Failed to create post' } } }",
+      "Client: use useActionState (React 19) or useFormState for form state management",
+      "Display field errors: fieldErrors?.title?.map(err => <p className='text-red-500'>{err}</p>)"
+    ],
+    "tags": ["server-actions", "error-handling", "typescript", "forms", "validation"],
+    "severity": "medium",
+    "frequency": "very-common",
+    "related_docs": ["https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations"],
+    "version": "next@14+"
+  },
+
+  {
+    "type": "fix_snippet",
+    "symptoms": ["Redis cache invalidation patterns", "invalidate related cache keys", "cache busting strategy"],
+    "root_cause": "Need to invalidate related cache entries when data changes without over-invalidating",
+    "fix": [
+      "Tag-based invalidation: store key-to-tag mapping in Redis sets",
+      "On write: await redis.sadd('tag:user:123', 'profile:123', 'posts:user:123', 'feed:latest'); await redis.set('profile:123', data, { ex: 3600 })",
+      "On invalidation: const keys = await redis.smembers('tag:user:123'); if (keys.length) await redis.del(...keys); await redis.del('tag:user:123')",
+      "Pattern-based: use key prefixes and scan (expensive, use sparingly): const keys = []; let cursor = '0'; do { const [next, found] = await redis.scan(cursor, { match: 'user:123:*', count: 100 }); cursor = next; keys.push(...found) } while (cursor !== '0')",
+      "Time-based: just set appropriate TTL and let data expire naturally (simplest approach)",
+      "Event-driven: emit event on write, invalidation handler subscribes and clears relevant caches"
+    ],
+    "tags": ["redis", "cache-invalidation", "patterns", "tags", "consistency"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/sdks/ts/commands/sets"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "diagnostic_step",
+    "symptoms": ["production error tracking", "identify errors in Vercel", "monitor Next.js app health"],
+    "root_cause": "Need comprehensive error monitoring and observability for production Next.js app",
+    "fix": [
+      "Install Sentry: npx @sentry/wizard@latest -i nextjs",
+      "Configure: sentry.client.config.ts, sentry.server.config.ts, sentry.edge.config.ts",
+      "Wrap next.config.js: const { withSentryConfig } = require('@sentry/nextjs'); module.exports = withSentryConfig(nextConfig, sentryOptions)",
+      "Track server action errors: Sentry.captureException(error) in catch blocks",
+      "Use Vercel's built-in: Vercel Web Analytics + Speed Insights for core metrics",
+      "For Redis/DB monitoring: Upstash Console metrics, Neon Dashboard, Supabase Dashboard",
+      "Custom logging: use structured logging (pino) and forward to log drain"
+    ],
+    "tags": ["monitoring", "sentry", "error-tracking", "observability", "production"],
+    "severity": "high",
+    "frequency": "common",
+    "related_docs": ["https://docs.sentry.io/platforms/javascript/guides/nextjs/"],
+    "version": "@sentry/nextjs@7+"
+  },
+  {
+    "type": "code_pattern",
+    "symptoms": ["Tailwind container queries", "responsive to parent container", "component-level responsive"],
+    "root_cause": "Need components to respond to their container size rather than viewport size",
+    "fix": [
+      "Enable plugin: npm install @tailwindcss/container-queries (or built-in in Tailwind v3.4+)",
+      "Mark container: className='@container'",
+      "Respond to container: className='@md:grid-cols-2 @lg:grid-cols-3'",
+      "Named containers: className='@container/sidebar' → child: '@md/sidebar:block'",
+      "Custom sizes in config: theme: { containers: { xs: '320px', sm: '480px' } }",
+      "Use for reusable components that might appear in different layout contexts (sidebar vs main)"
+    ],
+    "tags": ["tailwind", "container-queries", "responsive", "components", "layout"],
+    "severity": "low",
+    "frequency": "occasional",
+    "related_docs": ["https://tailwindcss.com/docs/container-queries"],
+    "version": "tailwindcss@3.4+"
+  },
+  {
+    "type": "bug_fix",
+    "symptoms": ["Drizzle migrate error with Turso", "cannot alter column in SQLite", "ALTER TABLE not supported"],
+    "root_cause": "SQLite has limited ALTER TABLE support - cannot modify/drop columns directly",
+    "fix": [
+      "SQLite only supports ALTER TABLE ADD COLUMN and RENAME COLUMN",
+      "For schema changes requiring column drops/modifications, Drizzle uses table recreation strategy",
+      "Use drizzle-kit push:sqlite for development (destructive but fast)",
+      "For production migrations: drizzle-kit generate:sqlite creates proper migration with table recreation",
+      "Manual migration pattern: CREATE new table → INSERT INTO new SELECT FROM old → DROP old → RENAME new",
+      "Test migrations on local SQLite before running against Turso",
+      "Backup Turso before risky migrations: turso db dump your-db > backup.sql"
+    ],
+    "tags": ["drizzle", "turso", "sqlite", "migrations", "alter-table"],
+    "severity": "high",
+    "frequency": "occasional",
+    "related_docs": ["https://orm.drizzle.team/docs/migrations"],
+    "version": "drizzle-kit@0.20+"
+  },
+  {
+    "type": "fix_snippet",
+    "symptoms": ["implement API response caching with Redis", "cache API responses", "reduce API calls with cache"],
+    "root_cause": "Need to cache external API responses to reduce costs, latency, and rate limit consumption",
+    "fix": [
+      "Create cache wrapper: async function cachedFetch<T>(url: string, options: { ttl?: number; tags?: string[] } = {}): Promise<T> { const cacheKey = `api:${crypto.createHash('sha256').update(url).digest('hex')}`; const cached = await redis.get<T>(cacheKey); if (cached) return cached; const response = await fetch(url); const data = await response.json(); await redis.set(cacheKey, data, { ex: options.ttl ?? 300 }); if (options.tags) { for (const tag of options.tags) await redis.sadd(`tag:${tag}`, cacheKey) } return data as T; }",
+      "Usage: const weather = await cachedFetch<WeatherData>('https://api.weather.com/current', { ttl: 600, tags: ['weather'] })",
+      "Invalidate: async function invalidateTag(tag: string) { const keys = await redis.smembers(`tag:${tag}`); if (keys.length) await redis.del(...keys, `tag:${tag}`) }",
+      "Add stale-while-revalidate: store timestamp, serve stale while refreshing in background"
+    ],
+    "tags": ["redis", "api-cache", "fetch", "external-api", "patterns"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://upstash.com/docs/redis/overall/getstarted"],
+    "version": "@upstash/redis@1+"
+  },
+  {
+    "type": "doc",
+    "symptoms": ["full-stack type safety architecture", "end-to-end types Next.js", "type-safe full stack"],
+    "root_cause": "Need architecture that provides type safety from database schema to client components",
+    "fix": [
+      "Layer 1 - Database: Prisma schema → generates TypeScript types, or Drizzle schema → inferred types",
+      "Layer 2 - Validation: Zod schemas share types with Prisma: const CreatePostSchema = z.object({...}); type CreatePost = z.infer<typeof CreatePostSchema>",
+      "Layer 3 - Server: Server Actions/API routes use Prisma types + Zod validation",
+      "Layer 4 - Client: Import shared types from lib/types.ts, use with React Hook Form + zodResolver",
+      "Layer 5 - Response: Define ActionResult<T> types for consistent server-client contract",
+      "Generate types from external sources: Supabase gen types, OpenAPI → zod codegen",
+      "Single source of truth: Prisma schema + Zod schemas = all types you need"
+    ],
+    "tags": ["typescript", "architecture", "type-safety", "full-stack", "patterns"],
+    "severity": "low",
+    "frequency": "common",
+    "related_docs": ["https://www.prisma.io/docs/orm/prisma-client/type-safety"],
+    "version": "typescript@5+"
+  },
+  {
+    "type": "performance_case",
+    "symptoms": ["Supabase auth slow on first load", "session check delays page render", "auth middleware adds latency"],
+    "root_cause": "Auth session validation adding latency to every request through middleware",
+    "fix": [
+      "Cache auth state client-side: Supabase SDK handles this automatically with localStorage",
+      "Minimize middleware auth checks: only validate on protected routes, not static assets",
+      "Use lightweight session check in middleware: supabase.auth.getUser() (validates JWT without DB call on every request)",
+      "Preload session in root layout: const { data: { session } } = await supabase.auth.getSession()",
+      "Pass session to client via context to avoid waterfall: <SessionProvider session={session}>",
+      "For static pages: check auth client-side with redirect, not in middleware"
+    ],
+    "tags": ["supabase", "authentication", "performance", "middleware", "session"],
+    "severity": "medium",
+    "frequency": "common",
+    "related_docs": ["https://supabase.com/docs/guides/auth/server-side/nextjs"],
+    "version": "@supabase/ssr@0.1+"
   }
 ]
