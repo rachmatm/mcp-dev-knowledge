@@ -24,18 +24,18 @@ Each entry follows this structure:
 
 | Type | Count | Description |
 |------|-------|-------------|
-| `fix_snippet` | 30 | Ready-to-use code solutions and implementation patterns |
-| `code_pattern` | 29 | Best practice code patterns and architectural guidance |
-| `bug_fix` | 20 | Known bugs with confirmed fixes |
-| `doc` | 15 | How-to documentation and setup guides |
-| `config_issue` | 12 | Configuration problems and corrections |
-| `performance_case` | 12 | Performance optimization cases |
+| `fix_snippet` | 40 | Ready-to-use code solutions and implementation patterns |
+| `code_pattern` | 35 | Best practice code patterns and architectural guidance |
+| `bug_fix` | 26 | Known bugs with confirmed fixes |
+| `doc` | 19 | How-to documentation and setup guides |
+| `config_issue` | 14 | Configuration problems and corrections |
+| `performance_case` | 13 | Performance optimization cases |
 | `error` | 8 | Runtime errors and their resolutions |
 | `diagnostic_step` | 8 | Step-by-step debugging procedures |
 | `root_cause` | 6 | Deep-dive root cause analysis |
 | `log_pattern` | 3 | Warning/error log patterns and their meaning |
 
-**Total: 143 entries**
+**Total: 172 entries**
 
 ## Metadata Fields
 
@@ -72,33 +72,47 @@ Each entry follows this structure:
 - **Retry state tracking** — track attempts, backoff, and failure metadata
 - **General patterns** — cache-aside, invalidation, distributed locks, leaderboards, feature flags, pipelines
 
+### File Storage
+- **Local Filesystem** — development file storage, /tmp usage, serve local uploads
+- **Vercel Blob** — production file storage, client/server uploads, storage abstraction pattern
+
+### Google APIs
+- **Google OAuth** — sign-in, scopes, token refresh, consent screen, database token persistence
+- **Google Calendar API** — list/create/update events, webhooks, timezone handling, rate limits
+- **Google Sheets API** — read/write data, batch operations, service accounts, Sheets-as-CMS pattern
+
 ### Deployment & Infrastructure
 - **Vercel** — deployment, serverless functions, edge runtime, regions, caching, cron jobs, environment variables
 
-## Tag Distribution (Top 20)
+## Tag Distribution (Top 25)
 
 | Tag | Count |
 |-----|-------|
-| vercel | 25 |
+| vercel | 27 |
 | redis | 24 |
-| performance | 21 |
+| performance | 22 |
+| googleapis | 21 |
 | serverless | 18 |
 | typescript | 18 |
 | supabase | 15 |
-| configuration | 14 |
+| configuration | 15 |
 | tailwind | 14 |
-| patterns | 13 |
-| local-dev | 12 |
-| database | 11 |
+| patterns | 14 |
+| local-dev | 13 |
+| google-api | 12 |
+| database | 12 |
 | inngest | 11 |
-| debugging | 10 |
+| debugging | 11 |
+| storage | 8 |
+| google-calendar | 7 |
+| google-sheets | 7 |
+| google-oauth | 6 |
 | sqlite | 10 |
-| prisma | 9 |
+| prisma | 10 |
 | upstash | 9 |
 | postgresql | 9 |
-| authentication | 8 |
+| authentication | 9 |
 | security | 8 |
-| app-router | 8 |
 
 ## Usage
 
@@ -154,6 +168,8 @@ const nextEntries = knowledgeBase.filter(e => e.version.includes('next@'));
 - **Styling:** Tailwind CSS 3+
 - **Hosting:** Vercel (Serverless + Edge)
 - **Databases:** SQLite/Turso, PostgreSQL/Neon, Supabase
+- **Storage:** Local Filesystem (dev), Vercel Blob (prod)
 - **Cache/Queue:** Upstash Redis, Upstash QStash
 - **Orchestration:** Inngest
 - **ORM:** Prisma, Drizzle
+- **Google APIs:** OAuth, Calendar, Sheets (googleapis)
