@@ -105,6 +105,7 @@ async function main() {
       frequency VARCHAR(20) NOT NULL,
       related_docs TEXT[] DEFAULT '{}',
       version VARCHAR(100),
+      stack VARCHAR(100) NOT NULL DEFAULT 'nextjs-vercel',
       searchable_text TEXT NOT NULL,
       embedding vector(1536),
       created_at TIMESTAMP DEFAULT NOW()
@@ -126,6 +127,7 @@ async function main() {
   await sql`CREATE INDEX IF NOT EXISTS idx_kb_tags ON knowledge_base USING GIN (tags)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_kb_type ON knowledge_base (type)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_kb_severity ON knowledge_base (severity)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_kb_stack ON knowledge_base (stack)`;
 
   // Full-text search index
   await sql`CREATE INDEX IF NOT EXISTS idx_kb_fts ON knowledge_base USING GIN (to_tsvector('english', searchable_text))`;
@@ -145,7 +147,7 @@ async function main() {
     const embeddingStr = `[${embedding.join(',')}]`;
 
     await sql`
-      INSERT INTO knowledge_base (type, symptoms, root_cause, fix, tags, severity, frequency, related_docs, version, searchable_text, embedding)
+      INSERT INTO knowledge_base (type, symptoms, root_cause, fix, tags, severity, frequency, related_docs, version, stack, searchable_text, embedding)
       VALUES (
         ${entry.type},
         ${entry.symptoms},
@@ -156,6 +158,7 @@ async function main() {
         ${entry.frequency},
         ${entry.related_docs || []},
         ${entry.version || null},
+        ${entry.stack || 'nextjs-vercel'},
         ${searchableText},
         ${embeddingStr}::vector
       )
