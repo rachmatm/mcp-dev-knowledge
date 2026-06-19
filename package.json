@@ -1,0 +1,20 @@
+{
+  "name": "rag-nextjs-vercel",
+  "version": "1.0.0",
+  "description": "A structured JSON knowledge base designed for Retrieval-Augmented Generation (RAG) systems, covering common issues, patterns, and solutions for **Next.js applications hosted on Vercel**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://us-east-1.gateway.connections.autonomous-agents.kiro.dev/rachmatm/rag-nextjs-vercel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  }
+}
