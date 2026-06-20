@@ -13,6 +13,9 @@ It ships with two ways to consume the data:
 
 The MCP server exposes the knowledge base (stored in Neon Postgres) through four tools. It is a Next.js App Router route at `app/api/[transport]/route.ts`, served at **`/api/mcp`** using the Streamable HTTP transport.
 
+> **Live server:** `https://mcp-dev-knowledge.vercel.app/api/mcp`
+> Landing page: <https://mcp-dev-knowledge.vercel.app>
+
 ### Tools
 
 | Tool | Input | Returns |
@@ -70,23 +73,28 @@ Inspect it with the official MCP Inspector:
 
 ```bash
 npx @modelcontextprotocol/inspector
-# Transport: Streamable HTTP  ·  URL: http://localhost:3000/api/mcp
+# Transport: Streamable HTTP
+# Local URL: http://localhost:3000/api/mcp
+# Live URL:  https://mcp-dev-knowledge.vercel.app/api/mcp
 ```
 
 ### Deploy to Vercel
 
+The server is deployed at **<https://mcp-dev-knowledge.vercel.app>**. To deploy your own:
+
 1. Import the repo into Vercel.
-2. Add the `DATABASE_URL` environment variable (Neon pooled connection string).
+2. Add the `DATABASE_URL` environment variable (Neon pooled connection string) — **required**; without it the tools return `DATABASE_URL is not set`.
 3. (Optional) Add `MCP_API_KEY` to require a bearer token.
 4. Deploy. The region is pinned to `sin1` (Singapore) in `vercel.json` to sit next to the Neon `ap-southeast-1` database.
+5. After adding or changing environment variables, **redeploy** for them to take effect.
 
 ### Connect a client
 
 ```json
 {
   "mcpServers": {
-    "rag-nextjs-vercel": {
-      "url": "https://<your-deployment>.vercel.app/api/mcp"
+    "dev-knowledge": {
+      "url": "https://mcp-dev-knowledge.vercel.app/api/mcp"
     }
   }
 }
@@ -97,8 +105,8 @@ If `MCP_API_KEY` is set, add a header (client config varies):
 ```json
 {
   "mcpServers": {
-    "rag-nextjs-vercel": {
-      "url": "https://<your-deployment>.vercel.app/api/mcp",
+    "dev-knowledge": {
+      "url": "https://mcp-dev-knowledge.vercel.app/api/mcp",
       "headers": { "Authorization": "Bearer <your-key>" }
     }
   }
@@ -110,9 +118,9 @@ For stdio-only clients, bridge with [`mcp-remote`](https://www.npmjs.com/package
 ```json
 {
   "mcpServers": {
-    "rag-nextjs-vercel": {
+    "dev-knowledge": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://<your-deployment>.vercel.app/api/mcp"]
+      "args": ["-y", "mcp-remote", "https://mcp-dev-knowledge.vercel.app/api/mcp"]
     }
   }
 }

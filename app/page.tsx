@@ -46,15 +46,16 @@ export default function Home() {
       >
         {`{
   "mcpServers": {
-    "rag-nextjs-vercel": {
-      "url": "https://<your-deployment>.vercel.app/api/mcp"
+    "dev-knowledge": {
+      "url": "https://mcp-dev-knowledge.vercel.app/api/mcp"
     }
   }
 }`}
       </pre>
       <p style={{ color: "#9a9aa5", fontSize: 14 }}>
-        Endpoint: <code>/api/mcp</code> · Transport: Streamable HTTP · Works with Cursor, Claude
-        Code/Desktop, Windsurf, Cline, VS Code and any MCP-compatible client.
+        Endpoint: <code>https://mcp-dev-knowledge.vercel.app/api/mcp</code> · Transport: Streamable
+        HTTP · Works with Cursor, Claude Code/Desktop, Windsurf, Cline, VS Code and any
+        MCP-compatible client.
       </p>
 
       <h2 style={{ fontSize: 18, marginTop: 32 }}>Tools</h2>
