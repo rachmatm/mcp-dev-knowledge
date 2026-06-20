@@ -195,7 +195,7 @@ const handler = createMcpHandler(
   },
   {
     serverInfo: {
-      name: "rag-nextjs-vercel",
+      name: "mcp-dev-knowledge",
       version: "2.0.0",
     },
     instructions:
