@@ -33,41 +33,57 @@ async function fetchMetalsPrice(currency: string): Promise<Record<string, unknow
   }
 }
 
-async function getPriceWithCache(priceType: "gold" | "usd"): Promise<{
-  [key: string]: unknown;
-} | null> {
-  const cacheKey = `metals_${priceType}_price`;
+async function getPricesWithCache(): Promise<{
+  goldPrice: number | null;
+  usdPrice: number | null;
+}> {
+  const goldCacheKey = "metals_gold_price";
+  const usdCacheKey = "metals_usd_price";
 
-  // Try to get from cache first
-  const cached = await getCachedValue(cacheKey);
-  if (cached) {
-    console.log(`[Cache] Hit for ${cacheKey}`);
-    return JSON.parse(cached);
+  // Try to get both from cache first
+  const [cachedGold, cachedUsd] = await Promise.all([
+    getCachedValue(goldCacheKey),
+    getCachedValue(usdCacheKey),
+  ]);
+
+  if (cachedGold && cachedUsd) {
+    console.log("[Cache] Both prices hit - returning from cache");
+    return {
+      goldPrice: Number(cachedGold),
+      usdPrice: Number(cachedUsd),
+    };
   }
 
-  console.log(`[Cache] Miss for ${cacheKey}, fetching from API`);
+  console.log("[Cache] Missing data - fetching from API");
 
-  // Fetch from API
-  let data: Record<string, unknown> | null = null;
-  
-  if (priceType === "gold") {
-    // Get gold price in IDR (1 gram gold = X IDR)
-    data = await fetchMetalsPrice("IDR");
-  } else if (priceType === "usd") {
-    // Get exchange rate: 1 USD = X IDR
-    // Fetch in IDR currency, which will give us the conversion rate
-    data = await fetchMetalsPrice("IDR");
-    // Extract only the exchange rate data (USD to IDR conversion)
-    // The API response will contain rates object with usd_idr or similar
+  // Fetch once from API with IDR currency
+  const apiData = await fetchMetalsPrice("IDR");
+
+  if (!apiData) {
+    console.error("[API] Failed to fetch prices");
+    return {
+      goldPrice: cachedGold ? Number(cachedGold) : null,
+      usdPrice: cachedUsd ? Number(cachedUsd) : null,
+    };
   }
 
-  if (data) {
-    // Cache the result
-    await setCachedValue(cacheKey, JSON.stringify(data), CACHE_EXPIRATION);
-    console.log(`[Cache] Stored ${cacheKey}`);
+  // Extract both values from single API response
+  const goldPrice =
+    typeof apiData.gold === "number" ? apiData.gold : null;
+  const usdPrice = typeof apiData.usd === "number" ? apiData.usd : null;
+
+  // Cache both values independently
+  if (goldPrice !== null) {
+    await setCachedValue(goldCacheKey, goldPrice.toString(), CACHE_EXPIRATION);
+    console.log(`[Cache] Stored ${goldCacheKey}`);
   }
 
-  return data;
+  if (usdPrice !== null) {
+    await setCachedValue(usdCacheKey, usdPrice.toString(), CACHE_EXPIRATION);
+    console.log(`[Cache] Stored ${usdCacheKey}`);
+  }
+
+  return { goldPrice, usdPrice };
 }
 
 export async function OPTIONS() {
@@ -76,27 +92,22 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    // Fetch both gold (IDR) and exchange rate data in parallel
-    const [goldData, exchangeData] = await Promise.all([
-      getPriceWithCache("gold"),
-      getPriceWithCache("usd"),
-    ]);
+    // Fetch both prices in single API call (with caching)
+    const { goldPrice, usdPrice } = await getPricesWithCache();
 
     // Build response
     const response: Record<string, unknown> = {
       timestamp: new Date().toISOString(),
     };
 
-    // Extract gold price in IDR (1 gram)
-    if (goldData && typeof goldData === "object" && "gold" in goldData) {
-      response.idr_gold_price = (goldData as Record<string, unknown>).gold;
+    if (goldPrice !== null) {
+      response.idr_gold_price = goldPrice;
     } else {
       response.idr_gold_price_error = "Failed to fetch gold price";
     }
 
-    // Extract USD to IDR exchange rate (1 USD = X IDR)
-    if (exchangeData && typeof exchangeData === "object" && "usd" in exchangeData) {
-      response.idr_usd_price = (exchangeData as Record<string, unknown>).usd;
+    if (usdPrice !== null) {
+      response.idr_usd_price = usdPrice;
     } else {
       response.idr_usd_price_error = "Failed to fetch USD/IDR exchange rate";
     }
