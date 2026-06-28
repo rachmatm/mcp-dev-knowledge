@@ -1,6 +1,7 @@
+import { getCachedValue, setCachedValue } from "@/lib/redis";
+
 const ALLOWED_ORIGIN = "https://rachmatm.github.io";
-const METALS_API_URL =
-  "https://api.metals.dev/v1/latest?api_key=CQVSF8GPCRHWPPJYWFP0414JYWFP0&currency=IDR&unit=g";
+const CACHE_EXPIRATION = 8 * 60 * 60; // 8 hours in seconds
 
 function corsHeaders() {
   return {
@@ -10,25 +11,88 @@ function corsHeaders() {
   };
 }
 
+async function fetchMetalsPrice(currency: string): Promise<Record<string, unknown> | null> {
+  const apiKey = process.env.METALS_DEV_API_KEY;
+  if (!apiKey) {
+    console.error("[Metals API] METALS_DEV_API_KEY not set");
+    return null;
+  }
+
+  const url = `https://api.metals.dev/v1/latest?api_key=${apiKey}&currency=${currency}&unit=g`;
+
+  try {
+    const res = await fetch(url, { next: { revalidate: 3600 } } as RequestInit);
+    if (!res.ok) {
+      console.error(`[Metals API] Upstream returned ${res.status}`);
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("[Metals API] Fetch error:", error);
+    return null;
+  }
+}
+
+async function getPriceWithCache(priceType: "gold" | "usd"): Promise<{
+  [key: string]: unknown;
+} | null> {
+  const cacheKey = `metals_${priceType}_price`;
+
+  // Try to get from cache first
+  const cached = await getCachedValue(cacheKey);
+  if (cached) {
+    console.log(`[Cache] Hit for ${cacheKey}`);
+    return JSON.parse(cached);
+  }
+
+  console.log(`[Cache] Miss for ${cacheKey}, fetching from API`);
+
+  // Fetch from API
+  const currency = priceType === "usd" ? "USD" : "IDR";
+  const data = await fetchMetalsPrice(currency);
+
+  if (data) {
+    // Cache the result
+    await setCachedValue(cacheKey, JSON.stringify(data), CACHE_EXPIRATION);
+    console.log(`[Cache] Stored ${cacheKey}`);
+  }
+
+  return data;
+}
+
 export async function OPTIONS() {
   return new Response(null, { status: 204, headers: corsHeaders() });
 }
 
 export async function GET() {
   try {
-    const res = await fetch(METALS_API_URL, {
-      next: { revalidate: 60 },
-    } as RequestInit);
-    if (!res.ok) {
-      return Response.json(
-        { error: `Upstream returned ${res.status}` },
-        { status: 502, headers: corsHeaders() }
-      );
+    // Fetch both gold (IDR) and USD prices in parallel
+    const [goldPrice, usdPrice] = await Promise.all([
+      getPriceWithCache("gold"),
+      getPriceWithCache("usd"),
+    ]);
+
+    // Build response
+    const response: Record<string, unknown> = {
+      timestamp: new Date().toISOString(),
+    };
+
+    if (goldPrice) {
+      response.idr_gold_price = goldPrice;
+    } else {
+      response.idr_gold_price_error = "Failed to fetch gold price";
     }
-    const data = await res.json();
-    return Response.json(data, { headers: corsHeaders() });
+
+    if (usdPrice) {
+      response.idr_usd_price = usdPrice;
+    } else {
+      response.idr_usd_price_error = "Failed to fetch USD price";
+    }
+
+    return Response.json(response, { headers: corsHeaders() });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown error";
+    console.error("[API] Error:", message);
     return Response.json(
       { error: message },
       { status: 500, headers: corsHeaders() }
