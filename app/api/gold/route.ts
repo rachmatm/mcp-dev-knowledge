@@ -120,6 +120,7 @@ export async function OPTIONS() {
 export async function GET() {
   try {
     // Fetch both prices in single API call (with caching)
+    // Prices: 1 gram gold in IDR, 1 USD in IDR
     const { goldPrice, usdPrice } = await getPricesWithCache();
 
     // Build response
