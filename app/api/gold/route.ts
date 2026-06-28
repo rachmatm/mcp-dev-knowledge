@@ -89,12 +89,13 @@ async function getPricesWithCache(): Promise<{
     };
   }
 
-  console.log("[v0] Got API data:", apiData);
+  console.log("[v0] Got API data");
 
   // Extract both values from single API response
+  // metals.dev returns: { metals: { gold: X }, currencies: { USD: Y } }
   const goldPrice =
-    typeof apiData.gold === "number" ? apiData.gold : null;
-  const usdPrice = typeof apiData.usd === "number" ? apiData.usd : null;
+    typeof (apiData as any).metals?.gold === "number" ? (apiData as any).metals.gold : null;
+  const usdPrice = typeof (apiData as any).currencies?.USD === "number" ? (apiData as any).currencies.USD : null;
 
   // Cache both values independently (fire and forget)
   if (goldPrice !== null) {
